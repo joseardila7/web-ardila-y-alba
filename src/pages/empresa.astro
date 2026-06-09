@@ -1,0 +1,179 @@
+---
+// =============================================
+// EMPRESA — Sobre nosotros
+// =============================================
+// Página corporativa con:
+//   - Hero de página interna (<h1>)
+//   - Bloques de presentación visual (<h3>)
+//   - Sección de ubicación y zona de trabajo
+//   - Sección de valores desde company.ts (<h2>)
+//
+// Animaciones:
+//   - Hero con gradiente animado
+//   - Bloques con fade-up escalonado
+//   - Valores con hover elevado
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ValuesBlock from "../components/ValuesBlock.astro";
+import Button from "../components/Button.astro";
+import { COMPANY } from "../data/company";
+import { CONTACT, ZONE } from "../data/contact";
+---
+
+<Layout
+  title="Sobre nosotros"
+  description={`Empresa de instalaciones eléctricas en Villanueva del Trabuco (Málaga). Conoce nuestros valores: profesionalidad, cercanía, compromiso y seguridad.`}
+>
+  <!-- ════════════════════════════════════════
+       ENCABEZADO DE PÁGINA INTERNA
+       <h1> de la página
+       ════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <!-- Círculos decorativos estáticos ligeros (sin blur) -->
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Sobre nosotros
+      </h1>
+      <p class="text-lg text-white/70">
+        {COMPANY.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       BLOQUES DE PRESENTACIÓN VISUAL
+       Cada bloque usa <h3> para el título
+       ════════════════════════════════════════ -->
+  <section class="px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="¿Quiénes somos?"
+        subtitle={`Empresa de instalaciones eléctricas y servicios técnicos ubicada en ${ZONE.areas[0]}, ${ZONE.areas[2]}. Ofrecemos soluciones profesionales para hogares, comunidades, locales y negocios.`}
+      />
+
+      <div class="mx-auto max-w-5xl space-y-12">
+        <!-- Bloque: Profesionalidad -->
+        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-fill-mode: both;">
+          <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
+            <span class="text-5xl">👔</span>
+          </div>
+          <div>
+            <h3 class="mb-2 text-xl font-bold text-brand-dark">Profesionalidad</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Trabajamos con seriedad y rigor en cada proyecto, cumpliendo la normativa vigente y aportando soluciones técnicas adaptadas a cada necesidad.
+            </p>
+          </div>
+        </article>
+
+        <!-- Bloque: Cercanía -->
+        <article class="flex flex-col items-center gap-8 md:flex-row-reverse animate-fade-up" style="animation-delay: 100ms; animation-fill-mode: both;">
+          <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
+            <span class="text-5xl">🤝</span>
+          </div>
+          <div>
+            <h3 class="mb-2 text-xl font-bold text-brand-dark">Cercanía</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Atención directa y personalizada. Escuchamos a cada cliente para entender sus necesidades y ofrecerle la mejor solución.
+            </p>
+          </div>
+        </article>
+
+        <!-- Bloque: Compromiso -->
+        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-delay: 200ms; animation-fill-mode: both;">
+          <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
+            <span class="text-5xl">🎯</span>
+          </div>
+          <div>
+            <h3 class="mb-2 text-xl font-bold text-brand-dark">Compromiso</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Nos implicamos en cada trabajo con responsabilidad, cumpliendo plazos y ofreciendo un servicio honesto y transparente.
+            </p>
+          </div>
+        </article>
+
+        <!-- Bloque: Seguridad -->
+        <article class="flex flex-col items-center gap-8 md:flex-row-reverse animate-fade-up" style="animation-delay: 300ms; animation-fill-mode: both;">
+          <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
+            <span class="text-5xl">🛡️</span>
+          </div>
+          <div>
+            <h3 class="mb-2 text-xl font-bold text-brand-dark">Seguridad</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Todas nuestras intervenciones se realizan siguiendo las normas de seguridad y reglamentación del sector eléctrico.
+            </p>
+          </div>
+        </article>
+
+        <!-- Bloque: Soluciones adaptadas -->
+        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-delay: 400ms; animation-fill-mode: both;">
+          <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
+            <span class="text-5xl">🔧</span>
+          </div>
+          <div>
+            <h3 class="mb-2 text-xl font-bold text-brand-dark">Soluciones adaptadas</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Cada proyecto es único. Analizamos cada caso y proponemos soluciones a medida, ya sea para una vivienda, un local o una comunidad.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       UBICACIÓN Y ZONA DE TRABAJO
+       ════════════════════════════════════════ -->
+  <section class="bg-gradient-to-br from-brand-accent to-brand-accent-light px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl text-center">
+      <div class="animate-fade-up mx-auto max-w-3xl">
+        <h2 class="mb-4 text-3xl font-bold text-brand-dark md:text-4xl">
+          Empresa de instalaciones eléctricas en {ZONE.areas[0]}
+        </h2>
+        <p class="mx-auto mb-8 text-lg text-brand-dark/80">
+          {ZONE.description}
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+          {ZONE.areas.map((area, i) => (
+            <span
+              class="animate-fade-up rounded-full bg-white/80 px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm"
+              style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}
+            >
+              {area}
+            </span>
+          ))}
+        </div>
+        <div class="animate-fade-up flex flex-col items-center justify-center gap-4 sm:flex-row" style="animation-delay: 400ms; animation-fill-mode: both;">
+          <Button variant="primary" size="lg" href="/contacto">
+            {CONTACT.quoteLabel}
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            href={`tel:${CONTACT.phoneLink}`}
+            class="border-brand-dark/40 text-brand-dark hover:bg-brand-dark hover:text-white"
+          >
+            {CONTACT.callLabel}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN: VALORES (desde company.ts)
+       ════════════════════════════════════════ -->
+  <section id="valores" class="bg-brand-surface-alt px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="Nuestros valores"
+        subtitle="Estos son los principios que guían nuestro trabajo día a día: profesionalidad, cercanía, compromiso, seguridad y soluciones adaptadas."
+      />
+      <ValuesBlock />
+    </div>
+  </section>
+</Layout>

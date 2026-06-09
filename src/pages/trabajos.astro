@@ -1,0 +1,91 @@
+---
+// =============================================
+// TRABAJOS — Galería de proyectos
+// =============================================
+// Galería con placeholders para fotos reales.
+// Incluye categorías decorativas y hover con zoom.
+//
+// Animaciones:
+//   - Hero de página con entrada animada
+//   - Filtros decorativos con fade-up escalonado
+//   - Galería con aparición escalonada
+//   - Cada placeholder tiene hover zoom + overlay
+//
+// NOTA SEO:
+//   - El <h1> es "Nuestros trabajos"
+//   - Los placeholders tienen texto descriptivo
+//     que deberá sustituirse por alt real
+//     cuando se añadan las fotos.
+//
+// CUANDO TENGAS FOTOS REALES:
+//   Sustituye GalleryPlaceholder por una
+//   cuadrícula de <img> con atributo alt
+//   descriptivo para cada trabajo.
+//   Ej: <img src="/obras/instalacion-1.jpg"
+//            alt="Instalación eléctrica completa en vivienda unifamiliar en [localidad]" />
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import GalleryPlaceholder from "../components/GalleryPlaceholder.astro";
+import { COMPANY } from "../data/company";
+import { GALLERY_CATEGORIES } from "../data/gallery";
+---
+
+<Layout
+  title="Trabajos realizados"
+  description={`Galería de trabajos de ${COMPANY.shortName}. Proyectos de instalaciones eléctricas, climatización y energía solar en Villanueva del Trabuco y Málaga.`}
+>
+  <!-- ════════════════════════════════════════
+       ENCABEZADO DE PÁGINA INTERNA
+       ════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    {/* Círculos decorativos estáticos ligeros (sin blur) */}
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Nuestros trabajos
+      </h1>
+      <p class="text-lg text-white/70">
+        Algunos de los proyectos que hemos realizado. Estamos preparando la galería con fotos reales de nuestras instalaciones.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       GALERÍA DE TRABAJOS
+       ════════════════════════════════════════ -->
+  <section class="px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      {/* Filtros decorativos por categoría */}
+      <div class="mb-10 flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrar por categoría">
+        {GALLERY_CATEGORIES.map((cat, i) => (
+          <button
+            class={`animate-fade-up rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
+              i === 0
+                ? "bg-brand-accent text-brand-dark shadow-md"
+                : "border border-gray-200 bg-white text-gray-600 hover:border-brand-accent/30 hover:bg-brand-accent/10 hover:shadow-sm"
+            }`}
+            aria-pressed={i === 0 ? "true" : "false"}
+            style={`animation-delay: ${i * 80}ms; animation-fill-mode: both;`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Galería de placeholders con animación escalonada */}
+      <GalleryPlaceholder count={9} columns={3} />
+
+      {/* Aviso informativo */}
+      <div class="mt-10 animate-fade-up rounded-xl border border-dashed border-gray-300 bg-brand-surface-alt p-8 text-center" style="animation-delay: 800ms; animation-fill-mode: both;">
+        <p class="text-sm text-gray-500">
+          📷 Esta galería se completará con fotos reales de
+          los trabajos realizados. Las imágenes se añadirán próximamente.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

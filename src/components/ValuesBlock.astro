@@ -1,0 +1,38 @@
+---
+// =============================================
+// VALUESBLOCK — Valores de la empresa
+// =============================================
+// Efectos hover sutiles:
+//   - Barra decorativa superior aparece
+//   - Círculo del icono se intensifica
+//   - Elevación mínima + sombra suave
+//
+// Los datos se leen de company.ts → VALUES.
+// =============================================
+
+import { VALUES } from "../data/company";
+---
+
+<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+  {VALUES.map((value) => (
+    <article class="group relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm transition-colors duration-200 hover:border-brand-accent/30 hover:shadow-sm">
+      {/* Barra decorativa superior que aparece al hacer hover */}
+      <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100"></div>
+
+      {/* Icono en círculo */}
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-accent/10 text-3xl transition-colors duration-200 group-hover:bg-brand-accent/15">
+        <span aria-hidden="true">{value.icon}</span>
+      </div>
+
+      {/* Título */}
+      <h3 class="mb-2 text-lg font-semibold text-brand-dark">
+        {value.title}
+      </h3>
+
+      {/* Descripción */}
+      <p class="text-sm leading-relaxed text-gray-600">
+        {value.description}
+      </p>
+    </article>
+  ))}
+</div>

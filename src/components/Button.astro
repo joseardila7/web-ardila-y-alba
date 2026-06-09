@@ -1,0 +1,87 @@
+---
+// =============================================
+// BOTÓN REUTILIZABLE
+// =============================================
+// Variantes disponibles y su estado normal:
+//
+//   "primary"        → bg-brand-dark / texto blanco
+//   "accent"         → bg-brand-accent (verde lima)
+//   "outline"        → solo borde, sin fondo
+//   "accent-outline" → borde accent, sin fondo
+//
+// Las variantes "outline" y "accent-outline" NO
+// incluyen estilos hover. Si se usan, hay que
+// pasar las clases hover en el prop `class`.
+//
+// Ejemplo para botón outline sobre fondo oscuro:
+//   <Button variant="outline"
+//     class="border-white text-white hover:bg-white hover:text-black">
+//
+// Efectos comunes a todas las variantes:
+//   - Active: micro escala para feedback táctil
+//   - Focus visible con outline accesible
+//   - Transición suave en todas las propiedades
+//
+// Si tiene href renderiza <a>, si no <button>.
+//
+// USO:
+//   <Button variant="accent" href="tel:000">Llamar</Button>
+//   <Button variant="primary">Enviar</Button>
+// =============================================
+
+export interface Props {
+  variant?: "primary" | "accent" | "outline" | "accent-outline";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  target,
+  rel,
+  class: className = "",
+  disabled = false,
+} = Astro.props;
+
+const variantStyles: Record<string, string> = {
+  primary:
+    "bg-brand-dark hover:bg-brand-primary text-white shadow-sm hover:shadow-md active:shadow-sm",
+  accent:
+    "bg-brand-accent hover:bg-brand-accent-dark text-brand-dark font-semibold shadow-sm hover:shadow-md active:shadow-sm",
+  outline:
+    "border border-brand-medium/50 text-brand-medium",
+  "accent-outline":
+    "border border-brand-accent/60 text-brand-accent",
+};
+
+const sizeStyles: Record<string, string> = {
+  sm: "px-4 py-1.5 text-sm",
+  md: "px-6 py-2.5 text-base",
+  lg: "px-8 py-3 text-lg",
+};
+
+const baseStyles =
+  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-200 no-underline cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-brand-accent focus-visible:outline-offset-2 active:scale-[0.97]";
+
+const disabledStyles = disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "";
+const styles =
+  `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className} ${disabledStyles}`.trim();
+---
+
+{
+  href ? (
+    <a href={href} target={target} rel={rel} class={styles}>
+      <slot />
+    </a>
+  ) : (
+    <button class={styles} disabled={disabled}>
+      <slot />
+    </button>
+  )
+}

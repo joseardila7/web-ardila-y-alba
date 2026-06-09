@@ -1,0 +1,116 @@
+---
+// =============================================
+// MAPEMBED — Mapa de ubicación (click-to-load)
+// =============================================
+// Click-to-load: muestra tarjeta estática con
+// dirección y botón "Ver mapa". El iframe de
+// Google Maps solo se descarga/carga al hacer
+// clic, evitando el impacto en rendimiento
+// durante el scroll y navegación.
+//
+// Las coordenadas se leen de src/data/contact.ts
+// → COORDINATES. Para cambiarlas, edita ese archivo.
+// =============================================
+
+import { CONTACT, COORDINATES } from "../data/contact";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const mapsUrl = `https://maps.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}&z=14`;
+const embedUrl = `https://maps.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}&z=14&output=embed`;
+---
+
+<div class={`overflow-hidden rounded-xl shadow-sm ${className}`}>
+  <!-- ════════════════════════════════════════
+       CONTENEDOR DINÁMICO
+       Por defecto muestra tarjeta estática.
+       Al hacer clic en "Ver mapa", el script
+       lo reemplaza por el iframe interactivo.
+       ════════════════════════════════════════ -->
+  <div id="map-container" class="flex flex-col items-center justify-center gap-4 bg-brand-surface-alt px-6 py-12 text-center">
+    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-brand-accent/10" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+    </div>
+    <div>
+      <p class="text-lg font-semibold text-brand-dark">Ubicación</p>
+      <p class="text-sm text-gray-600">{CONTACT.address}</p>
+    </div>
+    <button
+      id="load-map-btn"
+      class="inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-2.5 text-sm font-semibold text-brand-dark transition-colors duration-200 hover:bg-brand-accent-dark"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5 3 19 12 5 21 5 3" />
+      </svg>
+      Ver mapa
+    </button>
+  </div>
+
+  <!-- Enlace externo directo (siempre visible) -->
+  <div class="border border-t-0 border-gray-100 bg-white p-3 text-center">
+    <a
+      href={mapsUrl}
+      target="_blank"
+      rel="noreferrer"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-brand-accent transition-colors duration-200 hover:text-brand-accent-dark"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+      Abrir ubicación en Google Maps
+    </a>
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById("map-container");
+  const loadBtn = document.getElementById("load-map-btn");
+
+  if (container && loadBtn) {
+    loadBtn.addEventListener(
+      "click",
+      () => {
+        // Crear el iframe solo en el momento del clic
+        const wrapper = document.createElement("div");
+        wrapper.className = "relative w-full aspect-[16/9]";
+
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://maps.google.com/maps?q=37.060320,-4.326985&z=14&output=embed`;
+        iframe.width = "100%";
+        iframe.height = "100%";
+        iframe.style.border = "0";
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("loading", "lazy");
+        iframe.setAttribute(
+          "title",
+          "Ubicación de Ardila y Alba Instalaciones en Villanueva del Trabuco, Málaga"
+        );
+        iframe.className = "absolute inset-0 h-full w-full";
+
+        wrapper.appendChild(iframe);
+        container.innerHTML = "";
+        container.appendChild(wrapper);
+        container.classList.remove(
+          "flex",
+          "flex-col",
+          "items-center",
+          "justify-center",
+          "gap-4",
+          "bg-brand-surface-alt",
+          "px-6",
+          "py-12",
+          "text-center"
+        );
+      },
+      { passive: true }
+    );
+  }
+</script>

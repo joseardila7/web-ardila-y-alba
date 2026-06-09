@@ -1,17 +1,129 @@
 ---
+// =============================================
+// INICIO — Página principal
+// =============================================
+// Secciones en orden:
+//   1. Hero (portada — contiene el único <h1>)
+//   2. Servicios destacados (<h2>)
+//   3. Por qué elegirnos — valores (<h2>)
+//   4. Galería de trabajos — placeholders (<h2>)
+//   5. Zona de actuación (<h2>)
+//
+// Animaciones:
+//   - Cada sección tiene fade-up de entrada
+//   - Las tarjetas tienen aparición escalonada
+//   - Los elementos decorativos tienen flotación
+// =============================================
 
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import ValuesBlock from "../components/ValuesBlock.astro";
+import GalleryPlaceholder from "../components/GalleryPlaceholder.astro";
+import { COMPANY } from "../data/company";
+import { SERVICES } from "../data/services";
+import { ZONE } from "../data/contact";
+import { HOME_SERVICES, HOME_WHY_US, HOME_WORKS, HOME_ZONE } from "../data/home";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="Inicio"
+  description={`${COMPANY.shortName}. Instalaciones eléctricas, placas solares, aire acondicionado y mantenimiento en Villanueva del Trabuco y Málaga. Solicita presupuesto sin compromiso.`}
+>
+  <!-- ════════════════════════════════════════
+       HERO — Portada principal
+       El <h1> está dentro del componente Hero
+       ════════════════════════════════════════ -->
+  <Hero />
+
+  <!-- ════════════════════════════════════════
+       SERVICIOS DESTACADOS (featured = true)
+       ════════════════════════════════════════ -->
+  <section class="px-4 py-20 md:py-28" aria-labelledby="servicios-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="Nuestros servicios"
+        subtitle={HOME_SERVICES.subtitle}
+      />
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.filter((s) => s.featured).map((service, i) => (
+          <div class="animate-fade-up" style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}>
+            <ServiceCard service={service} />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 text-center animate-fade-up" style="animation-delay: 400ms; animation-fill-mode: both;">
+        <a
+          href="/servicios"
+          class="inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors duration-200 hover:text-brand-accent"
+          aria-label="Ver todos los servicios de instalaciones"
+        >
+          Ver todos los servicios
+          <span aria-hidden="true" class="text-lg">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       POR QUÉ ELEGIRNOS (valores)
+       ════════════════════════════════════════ -->
+  <section class="bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="valores-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="¿Por qué elegirnos?"
+        subtitle={HOME_WHY_US.subtitle}
+      />
+
+      {/* Cada tarjeta de valor contiene un <h3> */}
+      <ValuesBlock />
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       GALERÍA DE TRABAJOS (placeholders)
+       ════════════════════════════════════════ -->
+  <section class="px-4 py-20 md:py-28" aria-labelledby="trabajos-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="Algunos de nuestros trabajos"
+        subtitle={HOME_WORKS.subtitle}
+      />
+
+      <GalleryPlaceholder count={6} columns={3} />
+
+      <div class="mt-10 text-center animate-fade-up" style="animation-delay: 600ms; animation-fill-mode: both;">
+        <a
+          href="/trabajos"
+          class="inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors duration-200 hover:text-brand-accent"
+        >
+          Ver más trabajos
+          <span aria-hidden="true" class="text-lg">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       ZONA DE ACTUACIÓN
+       ════════════════════════════════════════ -->
+  <section class="bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="zona-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle title={ZONE.title} subtitle={ZONE.description} />
+
+      <div class="flex flex-wrap justify-center gap-3">
+        {ZONE.areas.map((area, i) => (
+          <span
+            class="animate-fade-up rounded-full border border-brand-primary/10 bg-white px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm transition-colors duration-200 hover:border-brand-accent/30 hover:bg-brand-accent/5"
+            style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}
+          >
+            {area}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,18 @@
+# ============================================
+# ROBOTS.TXT
+# ============================================
+# Indica a los buscadores qué páginas pueden
+# o no pueden indexar.
+#
+# ANTES DE PUBLICAR:
+#   1. Cambia la URL del Sitemap por la real
+#   2. Si hay secciones que no quieras indexar
+#      (ej: páginas internas), añádelas en
+#      Disallow
+# ============================================
+
+User-agent: *
+Allow: /
+
+# Sitemap — cambiar https://ejemplo.com por el dominio real
+Sitemap: https://ejemplo.com/sitemap.xml

@@ -1,0 +1,113 @@
+---
+// =============================================
+// LAYOUT PRINCIPAL — Plantilla base HTML5
+// =============================================
+// Envuelve todas las páginas. Proporciona:
+//   - Estructura <html>, <head>, <body>
+//   - Meta tags SEO (title, description, Open Graph)
+//   - Datos estructurados JSON-LD (Schema.org)
+//   - Estilos globales (Tailwind + brand colors)
+//   - Header y Footer
+//
+// CÓMO USARLO EN UNA PÁGINA:
+// ---
+// import Layout from "../layouts/Layout.astro";
+// ---
+// <Layout
+//   title="Título de la página"          ← aparece en la pestaña
+//   description="Descripción SEO"         ← meta description
+//   canonical="https://dominio.com/ruta"  ← URL canónica (opcional)
+//   ogImage="/images/og-inicio.jpg"       ← imagen para redes sociales (opcional)
+// >
+//   <!-- Contenido específico de la página -->
+// </Layout>
+//
+// PERSONALIZACIÓN:
+//   - Meta tags globales → edita aquí mismo
+//   - Datos de empresa   → edita src/data/company.ts
+//   - Schema.org          → edita src/components/SEO.astro
+// =============================================
+
+import "../styles/global.css";
+import { COMPANY } from "../data/company";
+import { LOCAL_DATA } from "../data/seo";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SEO from "../components/SEO.astro";
+
+export interface Props {
+  /** Título de la página (aparece en la pestaña del navegador) */
+  title: string;
+  /** Meta description para buscadores (máx. 160 caracteres) */
+  description: string;
+  /** URL canónica (evita contenido duplicado en Google) */
+  canonical?: string;
+  /** Ruta de la imagen para Open Graph (relativa a public/) */
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+} = Astro.props;
+
+const fullTitle = `${title} | ${COMPANY.shortName}`;
+const finalOgImage = ogImage || LOCAL_DATA.ogImage;
+const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ═══════════════════════════════════════
+         META TAGS PRINCIPALES (SEO)
+         ═══════════════════════════════════════ -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+
+    {/* URL canónica — ayuda a evitar contenido duplicado */}
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    {/* Datos estructurados JSON-LD (Schema.org) */}
+    <SEO />
+
+    <!-- ═══════════════════════════════════════
+         OPEN GRAPH (para compartir en redes)
+         ═══════════════════════════════════════ -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical || LOCAL_DATA.siteUrl} />
+    <meta property="og:site_name" content={COMPANY.shortName} />
+    {/* og:image: imagen que se muestra al compartir en redes */}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {/* og:locale: idioma y país */}
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- ═══════════════════════════════════════
+         FAVICON — sustituir por el logo real
+         ═══════════════════════════════════════ -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    {/* Navegación principal */}
+    <Header />
+
+    {/* Contenido principal de la página */}
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    {/* Pie de página */}
+    <Footer />
+  </body>
+</html>

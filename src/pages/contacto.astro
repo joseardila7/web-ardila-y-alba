@@ -1,0 +1,147 @@
+---
+// =============================================
+// CONTACTO — Página de contacto
+// =============================================
+// Dos columnas:
+//   Izquierda: tarjetas de contacto + horario + zona
+//   Derecha: formulario + mapa placeholder
+//
+// Animaciones:
+//   - Tarjetas de contacto con fade-up escalonado
+//   - Formulario con campos con entrada escalonada
+//   - Mapa placeholder con fade-up
+//   - Botones de acción con hover elevado
+//
+// NOTA SEO:
+//   - <h1> es "Contacta con nosotros"
+//   - Los datos de contacto (teléfono, email)
+//     son visibles como texto, lo que ayuda al SEO
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ContactForm from "../components/ContactForm.astro";
+import MapEmbed from "../components/MapEmbed.astro";
+import Button from "../components/Button.astro";
+import { COMPANY } from "../data/company";
+import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
+---
+
+<Layout
+  title="Contacto"
+  description={`Contacta con ${COMPANY.shortName}. Teléfono, WhatsApp, email y formulario para solicitar presupuesto sin compromiso.`}
+>
+  <section class="px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      {/* <h1> se genera dentro de SectionTitle */}
+      <SectionTitle
+        title="Contacta con nosotros"
+        subtitle="Estaremos encantados de atenderte y resolver tus dudas. Puedes llamarnos, escribirnos por WhatsApp o rellenar el formulario."
+      />
+
+      <div class="grid gap-12 md:grid-cols-2">
+        <!-- ════════════════════════════════════════
+             COLUMNA IZQUIERDA: Datos de contacto
+             ════════════════════════════════════════ -->
+        <div class="space-y-6">
+          <!-- Teléfono — visible como texto para SEO -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">Teléfono</h2>
+            <a
+              href={`tel:${CONTACT.phoneLink}`}
+              class="text-2xl font-bold text-brand-accent transition-colors hover:text-brand-accent-dark"
+              aria-label={`Llamar al ${CONTACT.phone}`}
+            >
+              {CONTACT.phone}
+            </a>
+            <p class="mt-1 text-xs text-gray-400">Horario pendiente de confirmar — consulta disponibilidad para urgencias.</p>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 100ms; animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">WhatsApp</h2>
+            <a
+              href={`https://wa.me/${CONTACT.whatsappLink}?text=${encodeURIComponent(CONTACT.whatsappMessage)}`}
+              target="_blank"
+              rel="noreferrer"
+              class="text-2xl font-bold text-brand-accent transition-colors hover:text-brand-accent-dark"
+              aria-label={`Escribir por WhatsApp al ${CONTACT.whatsapp}`}
+            >
+              {CONTACT.whatsapp}
+            </a>
+            <p class="mt-1 text-xs text-gray-400">Respondemos en horario laboral. Consulta disponibilidad para urgencias.</p>
+          </div>
+
+          <!-- Email -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 200ms; animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">Email</h2>
+            <a
+              href={`mailto:${CONTACT.email}`}
+              class="text-lg text-brand-primary transition-colors hover:text-brand-accent"
+            >
+              {CONTACT.email}
+            </a>
+          </div>
+
+          <!-- Dirección -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 300ms; animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">Dirección</h2>
+            <p class="text-gray-700">{CONTACT.address}</p>
+          </div>
+
+          <!-- Horario -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 400ms; animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">{SCHEDULE.title}</h2>
+            <ul class="space-y-1.5 text-gray-700">
+              {SCHEDULE.details.map((d) => (
+                <li class="flex items-center gap-2">
+                  <span class="h-1.5 w-1.5 rounded-full bg-brand-accent" aria-hidden="true"></span>
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Zona de actuación -->
+          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 500ms; animation-fill-mode: both;">
+            <h2 class="mb-2 text-lg font-semibold text-brand-dark">{ZONE.title}</h2>
+            <p class="mb-3 text-sm text-gray-600">{ZONE.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {ZONE.areas.map((area) => (
+                <span class="rounded-full bg-brand-accent/10 px-3 py-1 text-xs font-medium text-brand-accent-dark transition-colors duration-200 hover:bg-brand-accent/20">
+                  {area}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Botones rápidos de acción -->
+          <div class="animate-fade-up flex flex-wrap gap-3" style="animation-delay: 600ms; animation-fill-mode: both;">
+            <Button variant="accent" href={`tel:${CONTACT.phoneLink}`}>
+              {CONTACT.callLabel}
+            </Button>
+            <Button
+              variant="primary"
+              href={`https://wa.me/${CONTACT.whatsappLink}?text=${encodeURIComponent(CONTACT.whatsappMessage)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {CONTACT.whatsappLabel}
+            </Button>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════════
+             COLUMNA DERECHA: Formulario + Mapa
+             ════════════════════════════════════════ -->
+        <div class="space-y-10">
+          {/* Formulario de contacto — estructura accesible con labels */}
+          <ContactForm />
+
+          {/* Mapa con ubicación real (coordenadas desde contact.ts) */}
+          <MapEmbed />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

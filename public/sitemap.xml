@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================
+     SITEMAP.XML
+     ============================================
+     Ayuda a los buscadores (Google, Bing, etc.)
+     a encontrar todas las páginas del sitio.
+
+     CÓMO ACTUALIZARLO:
+     Si añades o quitas páginas, añade o elimina
+     la entrada correspondiente aquí.
+
+     CUÁNDO REVISARLO:
+     - Antes de publicar: cambia <loc> por la URL real
+     - Después de añadir páginas nuevas
+     - Si cambias la estructura de URLs
+
+     Más información:
+     https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+     ============================================ -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <!-- Página de inicio -->
+    <loc>https://ejemplo.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <!-- Página de servicios -->
+    <loc>https://ejemplo.com/servicios</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <!-- Página de trabajos / galería -->
+    <loc>https://ejemplo.com/trabajos</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <!-- Página sobre la empresa -->
+    <loc>https://ejemplo.com/empresa</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Página de contacto -->
+    <loc>https://ejemplo.com/contacto</loc>
+    <priority>0.9</priority>
+  </url>
+</urlset>

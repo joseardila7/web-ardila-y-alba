@@ -1,0 +1,69 @@
+---
+// =============================================
+// SEO — Datos estructurados JSON-LD
+// =============================================
+// Este componente inyecta un <script> con
+// JSON-LD (Schema.org) en el <head> para
+// ayudar a los buscadores a entender el
+// contenido de la web.
+//
+// TIPO DE SCHEMA: Electrician (LocalBusiness)
+// El tipo se configura en LOCAL_DATA.businessType
+//
+// PARA PERSONALIZAR:
+//   1. Edita LOCAL_DATA en src/data/seo.ts
+//   2. Ajusta COMPANY en src/data/company.ts
+//   3. El JSON-LD se genera automáticamente
+//
+// ⚠️ IMPORTANTE:
+//   Antes de publicar, revisa que todos los
+//   datos sean reales. Los valores actuales
+//   son provisionales para algunos campos.
+//
+//   PENDIENTE:
+//     - openingHoursSpecification (cuando el
+//       horario esté confirmado)
+//     - image (cuando tengas logo real)
+//
+// Más información:
+//   https://schema.org/Electrician
+//   https://developers.google.com/search/docs/appearance/structured-data/local-business
+// =============================================
+
+import { COMPANY } from "../data/company";
+import { CONTACT, COORDINATES } from "../data/contact";
+import { LOCAL_DATA } from "../data/seo";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": LOCAL_DATA.businessType,
+  name: COMPANY.name,
+  description: COMPANY.description,
+  url: LOCAL_DATA.siteUrl,
+  telephone: CONTACT.phoneLink,
+  email: CONTACT.email,
+  image: `${LOCAL_DATA.siteUrl}${LOCAL_DATA.ogImage}`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: CONTACT.address,
+    addressLocality: LOCAL_DATA.city,
+    addressRegion: LOCAL_DATA.province,
+    postalCode: LOCAL_DATA.postalCode,
+    addressCountry: LOCAL_DATA.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: COORDINATES.lat,
+    longitude: COORDINATES.lng,
+  },
+  areaServed: {
+    "@type": "City",
+    name: `${LOCAL_DATA.city}, ${LOCAL_DATA.province}`,
+  },
+  priceRange: LOCAL_DATA.priceRange,
+};
+
+const jsonLdString = JSON.stringify(jsonLd, null, 2);
+---
+
+<script type="application/ld+json" set:html={jsonLdString} />

@@ -1,0 +1,103 @@
+---
+// =============================================
+// SERVICIOS — Listado completo
+// =============================================
+// Muestra todos los servicios definidos en
+// src/data/services.ts en formato tarjetas.
+//
+// Secciones:
+//   1. Hero de página interna (<h1>)
+//   2. Grid de todas las tarjetas (<h3> para cada una)
+//   3. CTA de contacto final
+//
+// Animaciones:
+//   - Hero con efecto de entrada
+//   - Tarjetas con aparición escalonada
+//   - Botones con hover elevado
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import Button from "../components/Button.astro";
+import { COMPANY } from "../data/company";
+import { CONTACT } from "../data/contact";
+import { SERVICES } from "../data/services";
+---
+
+<Layout
+  title="Servicios"
+  description={`Servicios profesionales de ${COMPANY.shortName}: instalaciones eléctricas, reparaciones, mantenimiento, aire acondicionado, placas solares, bombas de pozo y más.`}
+>
+  <!-- ════════════════════════════════════════
+       ENCABEZADO DE PÁGINA INTERNA
+       <h1> de la página
+       ════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    {/* Círculos decorativos estáticos ligeros (sin blur) */}
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Nuestros servicios
+      </h1>
+      <p class="text-lg text-white/70">
+        Soluciones profesionales en instalaciones eléctricas, climatización, energía solar y servicios técnicos relacionados.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       LISTADO COMPLETO DE SERVICIOS
+       ════════════════════════════════════════ -->
+  <section class="px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle
+        title="Soluciones profesionales"
+        subtitle="Cada servicio está pensado para ofrecer soluciones adaptadas a cada necesidad, tanto para particulares como para empresas."
+      />
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.map((service, i) => (
+          // Cada servicio se renderiza como <article> con <h3>
+          // Aparición escalonada según índice
+          <div class="animate-fade-up" style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}>
+            <ServiceCard service={service} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CTA DE CONTACTO
+       ════════════════════════════════════════ -->
+  <section class="bg-brand-surface-alt px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-3xl text-center animate-fade-up">
+      <SectionTitle
+        title="¿No encuentras lo que buscas?"
+        subtitle="Si no encuentras el servicio que buscas, consúltanos sin compromiso. Estaremos encantados de ayudarte."
+        alignLeft={false}
+      />
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button variant="accent" size="lg" href={`tel:${CONTACT.phoneLink}`}>
+          {CONTACT.callLabel}
+        </Button>
+        <Button variant="primary" size="lg" href="/contacto">
+          {CONTACT.quoteLabel}
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nota informativa sobre disponibilidad -->
+  <section class="px-4 pb-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="text-xs text-gray-400">
+        Los servicios están sujetos a disponibilidad y evaluación técnica previa.
+        Consulta sin compromiso para cada caso concreto.
+      </p>
+    </div>
+  </section>
+</Layout>
