@@ -121,7 +121,7 @@ npm run preview
 | Dominio definitivo | `astro.config.mjs` + `seo.ts` + `sitemap.xml` + `robots.txt` |
 | Páginas legales | Crear aviso legal, privacidad, cookies |
 | Redes sociales | `contact.ts` → `SOCIAL` |
-| Conexión formulario | `ContactForm.astro` |
+| Conexión formulario | Conectado — Formspree (fetch + HTML nativo fallback) |
 
 ## Estado de la demo
 
@@ -130,7 +130,7 @@ Esta es una **versión demo presentable** para enseñar al cliente/familiar. Inc
 - Diseño profesional, responsive, optimizado para rendimiento (sin animaciones pesadas, sin blur, transiciones ligeras).
 - Datos reales: nombre, teléfono, WhatsApp, email, dirección, coordenadas, zona de trabajo, 19 servicios, 5 valores.
 - Mapa de ubicación interactivo (click-to-load: el iframe solo se carga al pulsar "Ver mapa").
-- Formulario de contacto (maqueta visual sin envío real).
+- Formulario de contacto funcional con Formspree (HTML nativo, sin JavaScript).
 - Placeholders para galería de trabajos con categorías visibles.
 - Navegación completa (Inicio, Servicios, Trabajos, Empresa, Contacto).
 - SEO básico con Schema.org (Electrician).
@@ -163,7 +163,7 @@ Se han creado tres páginas legales base con los datos del archivo `src/data/leg
 
 - **CIF/NIF**: actualmente pone "Pendiente de confirmar"
 - **Dominio definitivo**: actualmente pone "Pendiente de confirmar"
-- **Proveedor del formulario**: cuando se conecte Formspree/Resend/etc., debe añadirse como encargado de tratamiento en la política de privacidad
+- **Proveedor del formulario**: Formspree — debe añadirse como encargado de tratamiento en la política de privacidad
 
 ### Notas importantes
 
@@ -172,93 +172,62 @@ Se han creado tres páginas legales base con los datos del archivo `src/data/leg
 - Las páginas usan `noindex` para evitar que Google las indexe mientras tengan datos provisionales.
 - El formulario de contacto incluye un **checkbox obligatorio** de aceptación de la política de privacidad.
 
-## Formulario de contacto con Formspree (fetch inline)
+## Formulario de contacto con Formspree
 
-El formulario de contacto se envía a **Formspree** mediante `fetch()` en segundo plano, sin recargar ni redirigir la página. El resultado (éxito o error) se muestra dentro de la propia página de contacto.
+El formulario de contacto se envía a **Formspree** mediante `fetch()` con JavaScript mínimo. Si el usuario tiene JavaScript desactivado, el formulario mantiene el envío HTML nativo como fallback (redirigiendo a la página de Formspree).
 
 ### Configuración actual
 
 | Concepto | Valor |
 |----------|-------|
 | URL de Formspree | `https://formspree.io/f/mpqerynz` |
-| Dónde se configura | `src/components/ContactForm.astro` → dos lugares: `const FORMSPREE_URL` (Astro) y dentro del `<script>` (JS) |
+| Dónde se configura | `src/components/ContactForm.astro` → `const FORMSPREE_URL` |
 | Campos enviados (todos obligatorios) | nombre, telefono, email, servicio, localidad, mensaje, privacidad, subject |
-| Honeypot antispam | **Desactivado temporalmente.** El campo `_gotcha` causaba que Formspree devolviese 200 OK pero descartase el submission silenciosamente. Para reactivarlo, ver sección "Honeypot" más abajo. |
 | Asunto del email | "Nuevo contacto web - Ardila y Alba Instalaciones" |
-| Estados visuales | inicial, enviando, éxito inline, error inline |
-| Redirección externa | Eliminada — el éxito se muestra en la misma página |
-| Validación | HTML5 nativa (`required`) + `form.checkValidity()` en JavaScript |
-| Envío con JS | `fetch()` + `FormData` (todos los campos `name` se envían automáticamente) |
+| Validación | HTML5 nativa (`required`) |
+| Envío con JS | `fetch()` + `FormData` |
+| Fallback sin JS | POST HTML nativo al mismo endpoint |
 
 ### Cómo funciona
 
 1. El usuario rellena el formulario y pulsa "Enviar mensaje".
-2. El formulario tiene `novalidate`, por lo que el navegador **no bloquea** el evento submit.
-3. JavaScript intercepta el submit con `e.preventDefault()`.
-4. JavaScript llama `form.checkValidity()`. Si algún campo `required` está vacío o el checkbox sin marcar, muestra el mensaje de error nativo con `reportValidity()` y **no envía**.
-5. Si es válido, construye `new FormData(form)` (captura todos los campos con `name`) y lo envía con `fetch()`.
-6. El botón cambia a "Enviando..." y se deshabilita durante el envío.
-7. **Éxito:** se muestra un mensaje verde dentro de la página, el formulario se limpia y el botón se deshabilita 5 segundos.
-8. **Error:** se muestra un mensaje rojo indicando que se intente de nuevo o contacte por teléfono/WhatsApp. El botón se reactiva.
-9. Si el usuario tiene JavaScript desactivado, el formulario mantiene `action` y `method` HTML como fallback y enviará a Formspree de forma tradicional.
+2. El navegador valida los campos `required` con mensajes nativos. Si algún campo obligatorio está vacío, el navegador bloquea el envío y muestra un mensaje de error.
+3. Si todo es válido, JavaScript envía los datos con `fetch()` a Formspree.
+4. **Éxito:** aparece un mensaje verde dentro de la página: *"Mensaje enviado correctamente. Gracias por contactar con Ardila y Alba Instalaciones."* El formulario se limpia.
+5. **Error:** aparece un mensaje rojo dentro de la página y el botón se reactiva para reintentar.
+6. Si JavaScript está desactivado, el formulario se envía mediante POST HTML nativo y el usuario es redirigido a la página de Formspree.
 
-### Logs temporales de depuración
+### Notas sobre el campo email
 
-El formulario incluye `console.log` para depurar el envío. Ábrelos desde las DevTools del navegador (F12 > Consola):
-
-| Log | Cuándo aparece |
-|-----|----------------|
-| `ContactForm: Submit detectado` | Al hacer clic en "Enviar mensaje" |
-| `ContactForm: Formulario válido` | Después de pasar la validación |
-| `ContactForm: Datos finales enviados a Formspree` | Muestra todos los campos con sus valores (tras eliminar honeypot) |
-| `ContactForm: Respuesta Formspree status` | Código de respuesta HTTP |
-| `ContactForm: Respuesta Formspree ok` | `true` o `false` |
-| `ContactForm: Envío exitoso` | Cuando Formspree acepta el formulario |
-| `ContactForm: No hay datos que enviar` | Si todos los campos están vacíos |
-| `ContactForm: Error en fetch` | Si falla la conexión o Formspree devuelve error |
-
-**Importante:** Cuando confirmes que el formulario funciona, elimina o comenta estos `console.log` para producción. Están en el `<script>` de `ContactForm.astro`.
+- El campo email usa `type="email"` con validación nativa del navegador.
+- Se requiere un correo con formato válido (ej: `usuario@dominio.com`).
+- **Correos de prueba o genéricos** (como `alex@gmail.com`, `prueba@test.com`, etc.) pueden no ser aceptados por Formspree o no aparecer correctamente en las submissions.
+- Para pruebas reales, utiliza un correo válido y activo.
 
 ### Para cambiar la URL de Formspree
 
 1. Abre `src/components/ContactForm.astro`
-2. Localiza **ambas** apariciones de `FORMSPREE_URL`:
-   - Línea ~43: `const FORMSPREE_URL = "..."` (código Astro, usado en el `action` del `<form>`)
-   - Dentro del `<script>`: `const FORMSPREE_URL = "..."` (código JavaScript, usado en el `fetch`)
-3. Sustituye ambas URLs por la nueva
+2. Localiza `const FORMSPREE_URL` (línea ~3)
+3. Sustituye la URL por la nueva
 
-### Para cambiar el asunto del email
+### Para cambiar los mensajes de éxito/error
 
-En `src/components/ContactForm.astro`, línea ~38, cambia el valor de `EMAIL_SUBJECT`.
-
-### Honeypot antispam (desactivado temporalmente)
-
-El campo `_gotcha` (honeypot) **está desactivado** porque causaba que Formspree devolviese `200 OK` pero descartase el submission silenciosamente, sin mostrarlo en Submissions.
-
-Cuando el formulario funcione correctamente y quieras reactivar la protección antispam:
-
-1. En `src/components/ContactForm.astro`, descomenta la línea:
-   ```html
-   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
-   ```
-2. El script ya tiene `formData.delete("_gotcha")` como seguridad, pero con el honeypot descomentado el campo se enviará a Formspree con valor vacío (los bots lo rellenarían). Formspree comprueba este campo y lo filtra automáticamente.
+En `src/components/ContactForm.astro`, localiza `SUCCESS_MSG` y `ERROR_MSG` (líneas ~6-7) y cámbialos. También actualiza las constantes `SUCCESS_HTML` y `ERROR_HTML` en el `<script>` si necesitas cambiar el estilo.
 
 ### Campos del formulario y cómo los recibe Formspree
 
 Cada campo tiene un `name` que Formspree usa como clave en el email recibido:
 
-| name del campo | visible en el email como | obligatorio |
-|----------------|--------------------------|-------------|
-| `nombre` | nombre | sí |
-| `telefono` | telefono | sí |
-| `email` | email | sí (Formspree lo usa como Reply-To) |
-| `servicio` | servicio | sí |
-| `localidad` | localidad | sí |
-| `mensaje` | mensaje | sí |
-| `privacidad` | privacidad (valor: "Aceptada") | sí |
-| `subject` | Asunto del email (oculto) | sí |
-
-Los datos se envían como `FormData` sin convertir a JSON. Esto asegura que Formspree recibe la estructura exacta que espera.
+| name del campo | visible en el email como |
+|----------------|--------------------------|
+| `nombre` | nombre |
+| `telefono` | telefono |
+| `email` | email (Formspree lo usa como Reply-To) |
+| `servicio` | servicio |
+| `localidad` | localidad |
+| `mensaje` | mensaje |
+| `privacidad` | privacidad (valor: "Aceptada") |
+| `subject` | Asunto del email (oculto) |
 
 ### Cómo probar el envío en local
 
@@ -266,26 +235,10 @@ Los datos se envían como `FormData` sin convertir a JSON. Esto asegura que Form
 2. Abre http://localhost:4321/contacto
 3. Rellena **todos** los campos obligatorios (tienen `*`) y marca el checkbox de privacidad
 4. Pulsa "Enviar mensaje"
-5. El formulario se enviará sin recargar la página:
-   - Si Formspree acepta el mensaje, verás el mensaje de éxito inline
-   - Si falla, verás el mensaje de error inline
-6. Inicia sesión en https://formspree.io para verificar que los datos llegan completos (todos los campos con su contenido)
+5. Si el envío funciona, verás el mensaje de éxito en la propia página
+6. Inicia sesión en https://formspree.io para verificar que los datos llegan completos
 
-### Cómo probar que no se puede enviar vacío
-
-1. Abre http://localhost:4321/contacto
-2. Sin rellenar nada, pulsa "Enviar mensaje"
-3. El navegador debe mostrar un mensaje de error en el primer campo vacío (HTML5 validation)
-4. Rellena solo algunos campos y vuelve a intentar
-5. Deja el servicio sin seleccionar — debe impedir el envío
-6. Deja el checkbox de privacidad sin marcar — debe impedir el envío
-
-### Cómo probar el envío en Vercel
-
-1. Ve a la URL de tu deployment en Vercel (ej: `https://web-ardila-y-alba.vercel.app/contacto`)
-2. Rellena y envía el formulario
-3. El mensaje de éxito/error aparece en la propia página, sin redirigir a Formspree
-4. El mensaje llega al panel de Formspree con todos los campos rellenos
+> **Importante:** Usa un correo válido y real para las pruebas. Correos como `alex@gmail.com`, `prueba@test.com` u otros genéricos pueden no ser aceptados o no aparecer en las submissions.
 
 ### Gestión de mensajes
 
@@ -435,7 +388,7 @@ Revisa estos puntos desde la URL temporal, especialmente en **móvil**:
 - [ ] **Contacto**: datos de contacto visibles (teléfono, WhatsApp, email, dirección).
 - [ ] **Botones**: "Llama ahora" abre el marcador, "Escríbenos" abre WhatsApp, email abre el cliente de correo.
 - [ ] **Mapa**: al hacer clic en "Ver mapa" se carga el iframe correctamente.
-- [ ] **Formulario**: se ve bien, aunque no envíe datos todavía.
+- [ ] **Formulario**: funciona y envía datos a Formspree correctamente.
 - [ ] **Footer**: enlaces funcionan, datos de contacto correctos.
 - [ ] **Rendimiento**: scroll fluido, sin tirones ni FPS bajos.
 - [ ] **No hay datos inventados**: todo lo que aparece es real o está marcado como pendiente.
@@ -453,7 +406,7 @@ Esto solo cuando tengas dominio definitivo y datos completamente confirmados.
 - [ ] Configurar dominio real en `astro.config.mjs` → `site`
 - [ ] Actualizar `LOCAL_DATA.siteUrl` en `src/data/seo.ts`
 - [ ] Revisar servicios en `src/data/services.ts` — quitar los que no correspondan
-- [ ] Conectar el formulario de contacto (Netlify Forms, Formspree, Resend...)
+- [x] Conectar el formulario de contacto (Formspree — fetch + HTML nativo)
 - [ ] Actualizar `public/sitemap.xml` y `public/robots.txt` con dominio real
 - [ ] Crear páginas legales: Aviso legal, Privacidad, Cookies
 - [ ] Actualizar `SOCIAL` en `src/data/contact.ts` con redes reales
@@ -501,7 +454,7 @@ Los pasos 1–3 son **inmediatos** (para la demo). El resto es para la publicaci
 5. [ ] **Añadir fotos reales** de trabajos
 6. [ ] **Confirmar horario de atención**
 7. [ ] **Comprar/confirmar dominio** y configurarlo en todos los archivos
-8. [ ] **Conectar formulario de contacto** (Netlify Forms, Formspree, o similar)
+8. [x] **Conectar formulario de contacto** (Formspree — HTML nativo)
 9. [ ] **Revisar servicios** y quitar los que no correspondan
 10. [ ] **Crear páginas legales**
 11. [ ] **Añadir OG image** (1200×630px)
