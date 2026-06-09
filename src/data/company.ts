@@ -131,9 +131,9 @@ export const FOOTER_SECTIONS: FooterSection[] = [
   {
     title: "Legal",
     links: [
-      { label: "Aviso legal", href: "#" },
-      { label: "Política de privacidad", href: "#" },
-      { label: "Política de cookies", href: "#" },
+      { label: "Aviso legal", href: "/aviso-legal" },
+      { label: "Política de privacidad", href: "/politica-privacidad" },
+      { label: "Política de cookies", href: "/politica-cookies" },
     ],
   },
 ];

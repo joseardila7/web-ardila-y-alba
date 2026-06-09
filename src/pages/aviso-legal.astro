@@ -1,0 +1,93 @@
+---
+// =============================================
+// AVISO LEGAL — Página legal
+// =============================================
+// Contenido base. ANTES DE PUBLICACIÓN FINAL:
+//   - Completa el CIF/NIF en src/data/legal.ts
+//   - Completa el dominio definitivo
+//   - Revisa que todos los datos sean correctos
+//   - Puedes consultar con un asesor legal
+//
+// Esta página usa noindex porque los datos
+// legales no están completos todavía.
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import { LEGAL } from "../data/legal";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Aviso legal"
+  description={`Aviso legal de ${COMPANY.shortName}. Información sobre condiciones de uso del sitio web.`}
+  noindex={true}
+>
+  <section class="px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="mb-2 text-3xl font-bold text-brand-dark md:text-4xl">Aviso legal</h1>
+      <p class="mb-10 text-sm text-gray-400">Última actualización: {LEGAL.lastUpdate}</p>
+
+      <div class="prose prose-gray max-w-none space-y-8 text-sm leading-relaxed text-gray-700">
+        <!-- ════════════════════════════════════
+             SECCIÓN 1: DATOS IDENTIFICATIVOS
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">1. Datos identificativos</h2>
+          <p>En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSICE), se exponen los siguientes datos identificativos:</p>
+          <ul class="mt-3 space-y-1">
+            <li><strong>Razón social:</strong> {LEGAL.businessName}</li>
+            <li><strong>Nombre comercial:</strong> {LEGAL.tradeName}</li>
+            <li><strong>CIF/NIF:</strong> {LEGAL.cif}</li>
+            <li><strong>Domicilio:</strong> {LEGAL.address}</li>
+            <li><strong>Teléfono:</strong> {LEGAL.phone}</li>
+            <li><strong>Email:</strong> {LEGAL.email}</li>
+            <li><strong>Dominio web:</strong> {LEGAL.domain === "Pendiente de confirmar" ? "Pendiente de confirmar" : LEGAL.domain}</li>
+          </ul>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SECCIÓN 2: OBJETO
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">2. Objeto del sitio web</h2>
+          <p>El presente sitio web tiene como finalidad ofrecer información sobre los servicios profesionales de instalaciones eléctricas, climatización, energía solar y servicios técnicos relacionados prestados por {LEGAL.businessName}, así como facilitar un medio de contacto para la solicitud de presupuestos y consultas.</p>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SECCIÓN 3: CONDICIONES DE USO
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">3. Condiciones de uso</h2>
+          <p>El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación plena y sin reservas de todas y cada una de las condiciones incluidas en este aviso legal.</p>
+          <p class="mt-2">El usuario se obliga a hacer un uso adecuado de los contenidos y servicios ofrecidos, y a no emplearlos para incurrir en actividades ilícitas o contrarias a la buena fe y al ordenamiento jurídico.</p>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SECCIÓN 4: PROPIEDAD INTELECTUAL
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">4. Propiedad intelectual e industrial</h2>
+          <p>Todos los contenidos del sitio web (textos, imágenes, logotipos, diseño, estructura, etc.) son propiedad de {LEGAL.businessName} o, en su caso, se dispone de la correspondiente licencia para su uso.</p>
+          <p class="mt-2">Queda prohibida la reproducción, distribución, modificación o comunicación pública de los contenidos sin la autorización previa y por escrito del titular.</p>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SECCIÓN 5: RESPONSABILIDAD
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">5. Responsabilidad</h2>
+          <p>{LEGAL.businessName} no se hace responsable de los daños o perjuicios derivados del uso incorrecto de este sitio web ni de los posibles errores técnicos que pudieran producirse.</p>
+          <p class="mt-2">Tampoco se responsabiliza del contenido de los sitios web externos a los que se pueda acceder a través de enlaces incluidos en esta web.</p>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SECCIÓN 6: LEGISLACIÓN
+             ════════════════════════════════════ -->
+        <section>
+          <h2 class="mb-3 text-xl font-semibold text-brand-dark">6. Legislación aplicable y jurisdicción</h2>
+          <p>Las presentes condiciones se rigen por la legislación española. Para cualquier controversia que pudiera derivarse del acceso o uso del sitio web, las partes se someten a los juzgados y tribunales de la ciudad correspondiente al domicilio del responsable, renunciando expresamente a cualquier otro fuero que pudiera corresponderles.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Layout>

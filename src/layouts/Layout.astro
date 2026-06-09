@@ -44,6 +44,8 @@ export interface Props {
   canonical?: string;
   /** Ruta de la imagen para Open Graph (relativa a public/) */
   ogImage?: string;
+  /** Si es true, añade <meta name="robots" content="noindex" /> */
+  noindex?: boolean;
 }
 
 const {
@@ -51,6 +53,7 @@ const {
   description,
   canonical,
   ogImage,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = `${title} | ${COMPANY.shortName}`;
@@ -72,6 +75,9 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
 
     {/* URL canónica — ayuda a evitar contenido duplicado */}
     {canonical && <link rel="canonical" href={canonical} />}
+
+    {/* No index — para páginas legales provisionales */}
+    {noindex && <meta name="robots" content="noindex" />}
 
     {/* Datos estructurados JSON-LD (Schema.org) */}
     <SEO />

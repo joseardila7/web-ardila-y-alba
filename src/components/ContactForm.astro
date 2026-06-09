@@ -2,33 +2,40 @@
 // =============================================
 // CONTACTFORM — Formulario de contacto
 // =============================================
-// Sin animaciones de entrada en campos para
-// evitar repintados al cargar la página.
-// Solo el contenedor del formulario tiene
-// entrada suave (fade-up).
+// Envío con fetch a Formspree. Sin redirección
+// externa, éxito/error inline.
 //
-// ═══════════════════════════════════════════
-// ⚠️ IMPORTANTE: AÚN NO ENVÍA DATOS
-//    Es solo la maqueta visual accesible.
-// ═══════════════════════════════════════════
+// FORMSPREE:
+//   URL: https://formspree.io/f/mpqerynz
+//   El receptor del email se gestiona desde
+//   el panel de Formspree (no en este código).
+//   Para cambiar la URL, edita FORMSPREE_URL
+//   más abajo y en el script.
 //
-// OPCIONES PARA CONECTARLO MÁS ADELANTE:
-// ──────────────────────────────────────────
-// 1. NETLIFY FORMS (gratuito, fácil)
-//    Requisito: web alojada en Netlify.
-//    Documentación: https://docs.netlify.com/forms/setup/
+// CAMPOS ENVIADOS (todos obligatorios):
+//   - nombre, telefono, email, servicio
+//   - localidad, mensaje, privacidad, subject
 //
-// 2. FORMSPREE (gratuito hasta 50/mes)
-//    Documentación: https://formspree.io/
-//
-// 3. RESEND (API de email, requiere backend)
-//    Documentación: https://resend.com/docs
-//
-// 4. API PROPIA
+// HONEYPOT:
+//   Desactivado temporalmente (estaba causando
+//   que Formspree aceptase con 200 pero no
+//   mostrase los submissions). Reactivar cuando
+//   el formulario funcione correctamente.
+//   Para reactivar: descomentar el campo _gotcha
+//   en el HTML y añadir formData.delete("_gotcha")
+//   en el script después de construir formData.
 // =============================================
 
 import { SERVICE_TYPES } from "../data/contact";
-import Button from "./Button.astro";
+
+// ══════════════════════════════════════════════
+// CONFIGURACIÓN DE FORMSPREE
+// ══════════════════════════════════════════════
+// Si en el futuro cambias la URL de Formspree,
+// actualízala aquí Y en la constante FORMSPREE_URL
+// dentro del <script> más abajo.
+const FORMSPREE_URL = "https://formspree.io/f/mpqerynz";
+const EMAIL_SUBJECT = "Nuevo contacto web - Ardila y Alba Instalaciones";
 
 // Clase base compartida por todos los inputs del formulario
 const inputBase =
@@ -37,19 +44,38 @@ const inputBase =
 // Clase para el select con flecha personalizada
 const selectBase = inputBase + " appearance-none";
 const selectStyle = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236b7280' d='M4.646 5.646a.5.5 0 0 1 .708 0L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1rem;`;
+
+// Clases del botón de envío (mismas que Button variant="accent" size="lg")
+const btnBase = "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-200 no-underline cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-brand-accent focus-visible:outline-offset-2 active:scale-[0.97] w-full px-8 py-3 text-lg bg-brand-accent hover:bg-brand-accent-dark text-brand-dark font-semibold shadow-sm hover:shadow-md";
 ---
 
-<form id="contact-form" class="rounded-xl bg-white p-6 shadow-sm animate-fade-up md:p-8" aria-label="Formulario de contacto">
+<form
+  id="contact-form"
+  action={FORMSPREE_URL}
+  method="POST"
+  class="rounded-xl bg-white p-6 shadow-sm animate-fade-up md:p-8"
+  aria-label="Formulario de contacto"
+  novalidate
+>
+  {/* Asunto del email */}
+  <input type="hidden" name="subject" value={EMAIL_SUBJECT} />
+
+  {/* HONEYPOT desactivado temporalmente (causaba que Formspree no mostrase submissions).
+      Reactivar cuando el formulario funcione: descomentar esta línea y añadir
+      formData.delete("_gotcha") en el script tras construir formData.
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  */}
+
   {/* Fila: Nombre + Teléfono */}
   <div class="mb-4 grid gap-4 md:grid-cols-2">
     <div>
-      <label for="name" class="mb-1.5 block text-sm font-medium text-gray-700">
+      <label for="nombre" class="mb-1.5 block text-sm font-medium text-gray-700">
         Nombre <span class="text-red-400">*</span>
       </label>
       <input
         type="text"
-        id="name"
-        name="name"
+        id="nombre"
+        name="nombre"
         required
         placeholder="Ej: María García"
         class={inputBase}
@@ -57,13 +83,14 @@ const selectStyle = `background-image: url("data:image/svg+xml,%3Csvg xmlns='htt
     </div>
 
     <div>
-      <label for="phone" class="mb-1.5 block text-sm font-medium text-gray-700">
-        Teléfono
+      <label for="telefono" class="mb-1.5 block text-sm font-medium text-gray-700">
+        Teléfono <span class="text-red-400">*</span>
       </label>
       <input
         type="tel"
-        id="phone"
-        name="phone"
+        id="telefono"
+        name="telefono"
+        required
         placeholder="000 000 000"
         class={inputBase}
       />
@@ -87,45 +114,46 @@ const selectStyle = `background-image: url("data:image/svg+xml,%3Csvg xmlns='htt
 
   {/* Tipo de servicio (desplegable) */}
   <div class="mb-4">
-    <label for="service-type" class="mb-1.5 block text-sm font-medium text-gray-700">
-      Tipo de servicio
+    <label for="servicio" class="mb-1.5 block text-sm font-medium text-gray-700">
+      Tipo de servicio <span class="text-red-400">*</span>
     </label>
     <select
-      id="service-type"
-      name="service-type"
+      id="servicio"
+      name="servicio"
+      required
       class={selectBase}
       style={selectStyle}
     >
-      {SERVICE_TYPES.map((type) => (
-        <option value={type} disabled={type === "Selecciona un servicio"}>
-          {type}
-        </option>
+      <option value="" selected>Selecciona un servicio</option>
+      {SERVICE_TYPES.filter((t) => t !== "Selecciona un servicio").map((type) => (
+        <option value={type}>{type}</option>
       ))}
     </select>
   </div>
 
   {/* Localidad */}
   <div class="mb-4">
-    <label for="locality" class="mb-1.5 block text-sm font-medium text-gray-700">
-      Localidad
+    <label for="localidad" class="mb-1.5 block text-sm font-medium text-gray-700">
+      Localidad <span class="text-red-400">*</span>
     </label>
     <input
       type="text"
-      id="locality"
-      name="locality"
+      id="localidad"
+      name="localidad"
+      required
       placeholder="Ej: Villanueva del Trabuco"
       class={inputBase}
     />
   </div>
 
   {/* Mensaje */}
-  <div class="mb-6">
-    <label for="message" class="mb-1.5 block text-sm font-medium text-gray-700">
+  <div class="mb-4">
+    <label for="mensaje" class="mb-1.5 block text-sm font-medium text-gray-700">
       Mensaje <span class="text-red-400">*</span>
     </label>
     <textarea
-      id="message"
-      name="message"
+      id="mensaje"
+      name="mensaje"
       rows={5}
       required
       placeholder="Cuéntanos qué necesitas..."
@@ -133,15 +161,180 @@ const selectStyle = `background-image: url("data:image/svg+xml,%3Csvg xmlns='htt
     ></textarea>
   </div>
 
-  <div>
-    <Button variant="accent" size="lg" class="w-full">
-      Enviar mensaje
-    </Button>
+  {/* Checkbox: aceptación de política de privacidad */}
+  <div class="mb-6">
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input
+        type="checkbox"
+        id="privacidad"
+        name="privacidad"
+        value="Aceptada"
+        required
+        class="mt-1 h-4 w-4 shrink-0 rounded border-gray-300 text-brand-accent focus:ring-brand-accent/40"
+      />
+      <span class="text-sm text-gray-600">
+        He leído y acepto la
+        {' '}<a
+          href="/politica-privacidad"
+          target="_blank"
+          rel="noreferrer"
+          class="font-medium text-brand-accent underline hover:text-brand-accent-dark transition-colors duration-200"
+        >Política de privacidad</a>
+        {' '}<span class="text-red-400">*</span>
+      </span>
+    </label>
   </div>
 
-  {/* ⚠️ Aviso: formulario pendiente de conectar */}
-  <p class="mt-4 text-center text-xs text-gray-400">
-    📨 El formulario de contacto se conectará próximamente.
-    Mientras tanto, puedes llamarnos o escribirnos por WhatsApp.
-  </p>
+  {/* Estado del envío (oculto por defecto) */}
+  <div id="form-status" role="status" aria-live="polite" class="hidden mb-4"></div>
+
+  {/* Botón de envío */}
+  <div>
+    <button type="submit" id="form-submit-btn" class={btnBase}>
+      <span id="submit-btn-text">Enviar mensaje</span>
+    </button>
+  </div>
 </form>
+
+<script>
+  (function () {
+    // ═══════════════════════════════════════════
+    // CONFIGURACIÓN (debe coincidir con la de arriba)
+    // ═══════════════════════════════════════════
+    const FORMSPREE_URL = "https://formspree.io/f/mpqerynz";
+
+    // ═══════════════════════════════════════════
+    // DOM references
+    // ═══════════════════════════════════════════
+    const form = document.getElementById("contact-form");
+    if (!form) { console.error("ContactForm: form no encontrado"); return; }
+
+    const statusEl = document.getElementById("form-status");
+    const btnText = document.getElementById("submit-btn-text");
+    const btn = document.getElementById("form-submit-btn");
+
+    // ═══════════════════════════════════════════
+    // Plantillas HTML para éxito y error
+    // ═══════════════════════════════════════════
+    var SUCCESS_HTML =
+      '<div class="flex items-start gap-3 rounded-lg border border-green-200 bg-green-50 p-4">' +
+      '<svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-5 w-5 shrink-0 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+      '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' +
+      "</svg>" +
+      '<div>' +
+      '<p class="font-semibold text-green-800">Mensaje enviado correctamente</p>' +
+      '<p class="mt-1 text-sm text-green-700">Gracias por contactar con Ardila y Alba Instalaciones. Hemos recibido tu mensaje y responderemos lo antes posible.</p>' +
+      "</div>" +
+      "</div>";
+
+    var ERROR_HTML =
+      '<div class="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4">' +
+      '<svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-5 w-5 shrink-0 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+      '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' +
+      "</svg>" +
+      '<div>' +
+      '<p class="font-semibold text-red-800">Error al enviar</p>' +
+      '<p class="mt-1 text-sm text-red-700">Ha ocurrido un problema al enviar el mensaje. Inténtalo de nuevo o contacta por teléfono o WhatsApp.</p>' +
+      "</div>" +
+      "</div>";
+
+    // ═══════════════════════════════════════════
+    // Helpers
+    // ═══════════════════════════════════════════
+    function showStatus(html) {
+      if (!statusEl) return;
+      statusEl.innerHTML = html;
+      statusEl.classList.remove("hidden");
+      statusEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function hideStatus() {
+      if (!statusEl) return;
+      statusEl.classList.add("hidden");
+    }
+
+    function setLoading(loading) {
+      if (!btn || !btnText) return;
+      btn.disabled = loading;
+      if (loading) {
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+        btnText.textContent = "Enviando...";
+      } else {
+        btn.classList.remove("opacity-50", "cursor-not-allowed");
+        btnText.textContent = "Enviar mensaje";
+      }
+    }
+
+    // ═══════════════════════════════════════════
+    // Submit handler — fetch a Formspree
+    // ═══════════════════════════════════════════
+    form.addEventListener("submit", async function (e) {
+      console.log("=== ContactForm: Submit detectado ===");
+      e.preventDefault();
+      hideStatus();
+
+      if (!form.checkValidity()) {
+        console.log("ContactForm: Formulario inválido — reportando validez");
+        form.reportValidity();
+        return;
+      }
+      console.log("ContactForm: Formulario válido");
+
+      var formData = new FormData(form);
+
+      // Eliminar honeypot por si está presente (seguridad)
+      formData.delete("_gotcha");
+
+      console.log("ContactForm: Datos finales enviados a Formspree", Object.fromEntries(formData.entries()));
+
+      var hasValues = false;
+      for (var pair of formData.entries()) {
+        if (pair[1] && pair[1].toString().trim() !== "") {
+          hasValues = true;
+          break;
+        }
+      }
+      if (!hasValues) {
+        console.error("ContactForm: No hay datos que enviar — abortando");
+        showStatus(ERROR_HTML);
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        var res = await fetch(FORMSPREE_URL, {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+
+        console.log("ContactForm: Respuesta Formspree status", res.status);
+        console.log("ContactForm: Respuesta Formspree ok", res.ok);
+
+        if (!res.ok) {
+          var errorBody = await res.text().catch(function () { return ""; });
+          console.error("ContactForm: Error en respuesta", errorBody);
+          throw new Error();
+        }
+
+        console.log("ContactForm: Envío exitoso");
+        showStatus(SUCCESS_HTML);
+        form.reset();
+        btn.disabled = true;
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+        btnText.textContent = "Enviado";
+
+        setTimeout(function () {
+          btn.disabled = false;
+          btn.classList.remove("opacity-50", "cursor-not-allowed");
+          btnText.textContent = "Enviar mensaje";
+        }, 5000);
+      } catch (e) {
+        console.error("ContactForm: Error en fetch", e);
+        showStatus(ERROR_HTML);
+        setLoading(false);
+      }
+    });
+  })();
+</script>

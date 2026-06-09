@@ -1,0 +1,55 @@
+---
+// =============================================
+// GRACIAS — Página de confirmación de envío
+// =============================================
+// Se muestra después de enviar el formulario
+// de contacto correctamente.
+//
+// La redirección se configura en
+// ContactForm.astro → input oculto _next.
+// =============================================
+
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import { COMPANY } from "../data/company";
+import { CONTACT } from "../data/contact";
+---
+
+<Layout
+  title="Mensaje enviado — Gracias"
+  description={`Gracias por contactar con ${COMPANY.shortName}. Hemos recibido tu mensaje y te responderemos lo antes posible.`}
+>
+  <section class="flex min-h-[60vh] items-center justify-center px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-2xl text-center animate-fade-up">
+      {/* Icono de confirmación */}
+      <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-accent/10" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brand-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+      </div>
+
+      <h1 class="mb-4 text-3xl font-bold text-brand-dark md:text-4xl">
+        Gracias por contactar
+      </h1>
+
+      <p class="mb-8 text-lg text-gray-600">
+        Hemos recibido tu mensaje correctamente.
+        Te responderemos lo antes posible.
+      </p>
+
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button variant="accent" size="lg" href="/">
+          Volver al inicio
+        </Button>
+        <Button
+          variant="primary"
+          size="lg"
+          href={`tel:${CONTACT.phoneLink}`}
+        >
+          {CONTACT.callLabel}
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

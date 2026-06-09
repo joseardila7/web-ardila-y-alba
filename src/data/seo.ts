@@ -83,4 +83,24 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     description:
       "Contacta con Ardila y Alba Instalaciones por teléfono, WhatsApp o email. Solicita presupuesto sin compromiso para instalaciones eléctricas en Málaga.",
   },
+  "aviso-legal": {
+    title: "Aviso legal — Ardila y Alba Instalaciones",
+    description:
+      "Aviso legal del sitio web de Ardila y Alba Instalaciones S.L. Información sobre condiciones de uso y datos identificativos.",
+  },
+  "politica-privacidad": {
+    title: "Política de privacidad — Ardila y Alba Instalaciones",
+    description:
+      "Política de privacidad del sitio web de Ardila y Alba Instalaciones S.L. Información sobre el tratamiento de datos personales.",
+  },
+  "politica-cookies": {
+    title: "Política de cookies — Ardila y Alba Instalaciones",
+    description:
+      "Política de cookies del sitio web de Ardila y Alba Instalaciones S.L. Información sobre el uso de cookies.",
+  },
+  gracias: {
+    title: "Mensaje enviado — Gracias",
+    description:
+      "Gracias por contactar con Ardila y Alba Instalaciones. Hemos recibido tu mensaje y te responderemos lo antes posible.",
+  },
 } as const;

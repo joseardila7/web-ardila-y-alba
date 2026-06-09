@@ -149,6 +149,151 @@ Esta es una **versión demo presentable** para enseñar al cliente/familiar. Inc
 - [ ] ¿Tienes logo en buena calidad para sustituir el placeholder?
 - [ ] ¿Fotos de trabajos reales para la galería?
 
+## Páginas legales
+
+Se han creado tres páginas legales base con los datos del archivo `src/data/legal.ts`:
+
+| Página | Ruta | Contenido |
+|--------|------|-----------|
+| Aviso legal | `/aviso-legal` | Datos identificativos, condiciones de uso, propiedad intelectual, responsabilidad, legislación |
+| Política de privacidad | `/politica-privacidad` | Responsable, datos tratados, finalidad, base legal, conservación, derechos ARSOL |
+| Política de cookies | `/politica-cookies` | Qué son, cookies actuales (ninguna), gestión en navegadores, enlaces de interés |
+
+### Datos pendientes de confirmar
+
+- **CIF/NIF**: actualmente pone "Pendiente de confirmar"
+- **Dominio definitivo**: actualmente pone "Pendiente de confirmar"
+- **Proveedor del formulario**: cuando se conecte Formspree/Resend/etc., debe añadirse como encargado de tratamiento en la política de privacidad
+
+### Notas importantes
+
+- Los textos son una **base editable**, no constituyen asesoramiento legal. Se recomienda revisión por un profesional antes de la publicación final.
+- Si en el futuro se añaden **Google Analytics, píxeles de redes sociales, mapas con tracking** u otras herramientas externas, habrá que actualizar la política de cookies y valorar la implementación de un banner de consentimiento.
+- Las páginas usan `noindex` para evitar que Google las indexe mientras tengan datos provisionales.
+- El formulario de contacto incluye un **checkbox obligatorio** de aceptación de la política de privacidad.
+
+## Formulario de contacto con Formspree (fetch inline)
+
+El formulario de contacto se envía a **Formspree** mediante `fetch()` en segundo plano, sin recargar ni redirigir la página. El resultado (éxito o error) se muestra dentro de la propia página de contacto.
+
+### Configuración actual
+
+| Concepto | Valor |
+|----------|-------|
+| URL de Formspree | `https://formspree.io/f/mpqerynz` |
+| Dónde se configura | `src/components/ContactForm.astro` → dos lugares: `const FORMSPREE_URL` (Astro) y dentro del `<script>` (JS) |
+| Campos enviados (todos obligatorios) | nombre, telefono, email, servicio, localidad, mensaje, privacidad, subject |
+| Honeypot antispam | **Desactivado temporalmente.** El campo `_gotcha` causaba que Formspree devolviese 200 OK pero descartase el submission silenciosamente. Para reactivarlo, ver sección "Honeypot" más abajo. |
+| Asunto del email | "Nuevo contacto web - Ardila y Alba Instalaciones" |
+| Estados visuales | inicial, enviando, éxito inline, error inline |
+| Redirección externa | Eliminada — el éxito se muestra en la misma página |
+| Validación | HTML5 nativa (`required`) + `form.checkValidity()` en JavaScript |
+| Envío con JS | `fetch()` + `FormData` (todos los campos `name` se envían automáticamente) |
+
+### Cómo funciona
+
+1. El usuario rellena el formulario y pulsa "Enviar mensaje".
+2. El formulario tiene `novalidate`, por lo que el navegador **no bloquea** el evento submit.
+3. JavaScript intercepta el submit con `e.preventDefault()`.
+4. JavaScript llama `form.checkValidity()`. Si algún campo `required` está vacío o el checkbox sin marcar, muestra el mensaje de error nativo con `reportValidity()` y **no envía**.
+5. Si es válido, construye `new FormData(form)` (captura todos los campos con `name`) y lo envía con `fetch()`.
+6. El botón cambia a "Enviando..." y se deshabilita durante el envío.
+7. **Éxito:** se muestra un mensaje verde dentro de la página, el formulario se limpia y el botón se deshabilita 5 segundos.
+8. **Error:** se muestra un mensaje rojo indicando que se intente de nuevo o contacte por teléfono/WhatsApp. El botón se reactiva.
+9. Si el usuario tiene JavaScript desactivado, el formulario mantiene `action` y `method` HTML como fallback y enviará a Formspree de forma tradicional.
+
+### Logs temporales de depuración
+
+El formulario incluye `console.log` para depurar el envío. Ábrelos desde las DevTools del navegador (F12 > Consola):
+
+| Log | Cuándo aparece |
+|-----|----------------|
+| `ContactForm: Submit detectado` | Al hacer clic en "Enviar mensaje" |
+| `ContactForm: Formulario válido` | Después de pasar la validación |
+| `ContactForm: Datos finales enviados a Formspree` | Muestra todos los campos con sus valores (tras eliminar honeypot) |
+| `ContactForm: Respuesta Formspree status` | Código de respuesta HTTP |
+| `ContactForm: Respuesta Formspree ok` | `true` o `false` |
+| `ContactForm: Envío exitoso` | Cuando Formspree acepta el formulario |
+| `ContactForm: No hay datos que enviar` | Si todos los campos están vacíos |
+| `ContactForm: Error en fetch` | Si falla la conexión o Formspree devuelve error |
+
+**Importante:** Cuando confirmes que el formulario funciona, elimina o comenta estos `console.log` para producción. Están en el `<script>` de `ContactForm.astro`.
+
+### Para cambiar la URL de Formspree
+
+1. Abre `src/components/ContactForm.astro`
+2. Localiza **ambas** apariciones de `FORMSPREE_URL`:
+   - Línea ~43: `const FORMSPREE_URL = "..."` (código Astro, usado en el `action` del `<form>`)
+   - Dentro del `<script>`: `const FORMSPREE_URL = "..."` (código JavaScript, usado en el `fetch`)
+3. Sustituye ambas URLs por la nueva
+
+### Para cambiar el asunto del email
+
+En `src/components/ContactForm.astro`, línea ~38, cambia el valor de `EMAIL_SUBJECT`.
+
+### Honeypot antispam (desactivado temporalmente)
+
+El campo `_gotcha` (honeypot) **está desactivado** porque causaba que Formspree devolviese `200 OK` pero descartase el submission silenciosamente, sin mostrarlo en Submissions.
+
+Cuando el formulario funcione correctamente y quieras reactivar la protección antispam:
+
+1. En `src/components/ContactForm.astro`, descomenta la línea:
+   ```html
+   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+   ```
+2. El script ya tiene `formData.delete("_gotcha")` como seguridad, pero con el honeypot descomentado el campo se enviará a Formspree con valor vacío (los bots lo rellenarían). Formspree comprueba este campo y lo filtra automáticamente.
+
+### Campos del formulario y cómo los recibe Formspree
+
+Cada campo tiene un `name` que Formspree usa como clave en el email recibido:
+
+| name del campo | visible en el email como | obligatorio |
+|----------------|--------------------------|-------------|
+| `nombre` | nombre | sí |
+| `telefono` | telefono | sí |
+| `email` | email | sí (Formspree lo usa como Reply-To) |
+| `servicio` | servicio | sí |
+| `localidad` | localidad | sí |
+| `mensaje` | mensaje | sí |
+| `privacidad` | privacidad (valor: "Aceptada") | sí |
+| `subject` | Asunto del email (oculto) | sí |
+
+Los datos se envían como `FormData` sin convertir a JSON. Esto asegura que Formspree recibe la estructura exacta que espera.
+
+### Cómo probar el envío en local
+
+1. Ejecuta `npm run dev`
+2. Abre http://localhost:4321/contacto
+3. Rellena **todos** los campos obligatorios (tienen `*`) y marca el checkbox de privacidad
+4. Pulsa "Enviar mensaje"
+5. El formulario se enviará sin recargar la página:
+   - Si Formspree acepta el mensaje, verás el mensaje de éxito inline
+   - Si falla, verás el mensaje de error inline
+6. Inicia sesión en https://formspree.io para verificar que los datos llegan completos (todos los campos con su contenido)
+
+### Cómo probar que no se puede enviar vacío
+
+1. Abre http://localhost:4321/contacto
+2. Sin rellenar nada, pulsa "Enviar mensaje"
+3. El navegador debe mostrar un mensaje de error en el primer campo vacío (HTML5 validation)
+4. Rellena solo algunos campos y vuelve a intentar
+5. Deja el servicio sin seleccionar — debe impedir el envío
+6. Deja el checkbox de privacidad sin marcar — debe impedir el envío
+
+### Cómo probar el envío en Vercel
+
+1. Ve a la URL de tu deployment en Vercel (ej: `https://web-ardila-y-alba.vercel.app/contacto`)
+2. Rellena y envía el formulario
+3. El mensaje de éxito/error aparece en la propia página, sin redirigir a Formspree
+4. El mensaje llega al panel de Formspree con todos los campos rellenos
+
+### Gestión de mensajes
+
+Los mensajes recibidos se gestionan desde el panel de Formspree (no desde el código). Allí puedes:
+- Leer los mensajes entrantes
+- Configurar la dirección de email donde se notifican los nuevos mensajes
+- Ver estadísticas básicas
+
 ## Dónde cambiar los datos
 
 ### Estructura de archivos de datos
