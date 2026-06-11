@@ -5,6 +5,7 @@ import CTABanner from "../../components/CTABanner.astro";
 import RelatedServices from "../../components/RelatedServices.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { SERVICES } from "../../data/services";
+import { LOCAL_DATA } from "../../data/seo";
 
 export async function getStaticPaths() {
   return SERVICES.map((service) => ({
@@ -14,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { service } = Astro.props;
-const canonicalUrl = `https://ardilayalba.com/servicios/${service.slug}`;
+const canonicalUrl = `${LOCAL_DATA.siteUrl}/servicios/${service.slug}`;
 ---
 
 <Layout

@@ -29,7 +29,7 @@ ardila-alba-web/
 │   │   ├── GalleryPlaceholder.astro # Placeholders para galería de trabajos
 │   │   ├── Header.astro         # Barra de navegación principal
 │   │   ├── Hero.astro           # Portada principal
-│   │   ├── MapPlaceholder.astro # Placeholder para mapa
+│   │   ├── MapEmbed.astro       # Mapa interactivo click-to-load
 │   │   ├── SectionTitle.astro   # Título de sección reutilizable
 │   │   ├── SEO.astro            # Datos estructurados JSON-LD (Schema.org)
 │   │   ├── ServiceCard.astro    # Tarjeta de servicio
@@ -73,7 +73,7 @@ ardila-alba-web/
 │   │   └── politica-cookies.astro
 │   └── styles/                  # Estilos globales
 │       └── global.css           # Colores de marca, Tailwind, animaciones
-├── .env.example                 # Ejemplo de variables de entorno
+├── .env.example                 # Variables de entorno (no requeridas para desarrollo local)
 ├── astro.config.mjs             # Configuración de Astro
 ├── package.json                 # Dependencias y scripts
 ├── tsconfig.json                # Configuración de TypeScript
@@ -138,17 +138,10 @@ npm run preview
 |------|-----------------|
 | Logo real en buena calidad | `public/images/logo.svg` + `company.ts` → `LOGO` |
 | Fotos reales de trabajos | `public/images/trabajos/` + `gallery.ts` |
-| Fotos de nave/vehículos | `public/images/` |
-| Horario de atención | `contact.ts` → `SCHEDULE.details` |
+| Horario de atención confirmado | `contact.ts` → `SCHEDULE.details` |
 | Dominio definitivo | `astro.config.mjs` + `seo.ts` + `sitemap.xml` + `robots.txt` |
-| Páginas legales | Crear aviso legal, privacidad, cookies |
-| Redes sociales | `contact.ts` → `SOCIAL` |
-| Conexión formulario | Conectado — Formspree (fetch + fallback HTML nativo) |
-| Página de presupuesto | Creada — enlaza al formulario de contacto y ofrece datos recomendados |
-| Página de sectores | Creada — 6 sectores con soluciones generales |
-| Página de FAQ | Creada — 10 preguntas frecuentes con acordeón |
-| Blog / Consejos | Creado — 5 artículos iniciales con páginas individuales |
-| Páginas específicas | Creadas — /energia-solar, /climatizacion, /mantenimiento |
+| Redes sociales reales | `contact.ts` → `SOCIAL` (actualmente `#`) |
+| CIF/NIF definitivo | `data/legal.ts` → `cif` |
 
 ## Estado de la demo
 
@@ -699,7 +692,7 @@ Si el usuario tiene activada `prefers-reduced-motion: reduce`:
 2. Las transiciones y animaciones CSS se anulan con `transition-duration: 0.01ms !important`.
 3. Las clases de micro-interacción (`card-hover`, `badge-hover`, `group-icon`, etc.) pierden su efecto.
 
-No queda contenido invisible si JavaScript falla: el sistema tiene un **timeout de seguridad de 2.5 s** que fuerza `.reveal-visible` en todos los elementos pendientes.
+No queda contenido invisible si JavaScript falla: el sistema tiene un **timeout de seguridad de 3 s** que fuerza `.is-visible` en todos los elementos pendientes, además de que el contenido es visible por defecto (el CSS solo oculta elementos si `html.js` está presente).
 
 ### Reglas para mantener el rendimiento
 
