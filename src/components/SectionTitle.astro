@@ -1,18 +1,4 @@
 ---
-// =============================================
-// SECTIONTITLE — Título de sección reutilizable
-// =============================================
-// Incluye animación fade-up con la línea
-// decorativa que se expande desde la izquierda.
-//
-// USO:
-//   <SectionTitle
-//     title="Servicios"
-//     subtitle="Texto de apoyo"
-//     alignLeft={true}
-//   />
-// =============================================
-
 export interface Props {
   title: string;
   subtitle?: string;
@@ -26,8 +12,8 @@ const alignClasses = alignLeft ? "text-left" : "text-center";
 const lineMargins = alignLeft ? "ml-0" : "mx-auto";
 ---
 
-<div class={`mb-12 animate-fade-up ${alignClasses} ${className}`}>
-  <div class={`${lineMargins} mb-4 h-1 w-16 rounded-full bg-brand-accent`}></div>
+<div class={`mb-12 reveal-up ${alignClasses} ${className}`}>
+  <div class={`section-accent ${lineMargins} mb-5`}></div>
 
   <h2 class="text-3xl font-bold tracking-tight text-brand-dark md:text-4xl">
     {title}

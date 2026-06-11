@@ -108,12 +108,77 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
     {/* Navegación principal */}
     <Header />
 
-    {/* Contenido principal de la página */}
+    {/* Contenido principal (sin page-enter — el scroll reveal
+         se encarga de las animaciones de entrada) */}
     <main class="flex-1">
       <slot />
     </main>
 
     {/* Pie de página */}
     <Footer />
+
+    <!-- Scroll reveal: IntersectionObserver
+         - Marca html.js para activar el CSS oculto.
+         - Observa elementos .reveal* y añade .is-visible al entrar.
+         - Una sola instancia, sin listeners de scroll.
+         - Safety timeout a los 3s por si algo falla. -->
+    <script>
+      (function () {
+        "use strict";
+
+        // 1. Marcar JS como activo (activa los estilos ocultos en CSS)
+        document.documentElement.classList.add("js");
+        console.log("[ScrollReveal] JS cargado");
+
+        var selector =
+          ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale";
+
+        function revealAll() {
+          document.querySelectorAll(selector).forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+          console.log("[ScrollReveal] Todos revelados (timeout/motion)");
+        }
+
+        // 2. Si no hay IntersectionObserver o el usuario prefiere
+        //    reducir movimiento, revelar todo inmediatamente
+        if (
+          !("IntersectionObserver" in window) ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          revealAll();
+          return;
+        }
+
+        // 3. Contar elementos
+        var elements = document.querySelectorAll(selector);
+        console.log("[ScrollReveal] Elementos encontrados:", elements.length);
+
+        if (elements.length === 0) return;
+
+        // 4. Crear observer
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+        );
+
+        // 5. Empezar a observar
+        elements.forEach(function (el) {
+          observer.observe(el);
+        });
+        console.log("[ScrollReveal] Observando", elements.length, "elementos");
+
+        // 6. Safety timeout: revelar elementos que no se hayan visto
+        //    después de 3 segundos
+        setTimeout(revealAll, 3000);
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Energía solar"
+  description={`Instalación de placas solares y energía solar fotovoltaica para autoconsumo. ${COMPANY.shortName} te ayuda a aprovechar la energía renovable.`}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Energía solar
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-white/70">
+        Instalación de sistemas de energía solar fotovoltaica para autoconsumo en viviendas y negocios.
+      </p>
+    </div>
+  </section>
+
+  <section class="px-4 py-20 md:py-28 reveal-up">
+    <div class="mx-auto max-w-5xl">
+      <SectionTitle
+        title="Placas solares para autoconsumo"
+        subtitle="Aprovecha la energía del sol para reducir tu consumo eléctrico con una instalación profesional adaptada a tus necesidades."
+      />
+
+      <div class="reveal-up grid gap-8 md:grid-cols-2">
+        <div class="reveal-left space-y-4">
+          <h3 class="text-xl font-bold text-brand-dark">¿Qué ofrecemos?</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Instalación de paneles solares fotovoltaicos para autoconsumo</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Estudio previo de viabilidad técnica y dimensionamiento del sistema</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Instalación de inversores y componentes necesarios</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Legalización y tramitación de la instalación</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Asesoramiento sobre ayudas y subvenciones disponibles</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal-right space-y-4" style="transition-delay: 100ms">
+          <h3 class="text-xl font-bold text-brand-dark">¿Para quién?</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Viviendas unifamiliares que quieran reducir su factura eléctrica</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Empresas y negocios interesados en eficiencia energética</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Comunidades de vecinos con espacio en cubierta disponible</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Fincas y explotaciones agrícolas con consumo energético elevado</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="¿Quieres saber más sobre energía solar?"
+    subtitle="Te orientamos sin compromiso sobre la mejor solución para tu hogar o negocio."
+  />
+</Layout>

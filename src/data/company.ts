@@ -102,15 +102,24 @@ export const FOOTER_SECTIONS: FooterSection[] = [
       { label: "Sobre nosotros", href: "/empresa" },
       { label: "Valores", href: "/empresa#valores" },
       { label: "Trabajos", href: "/trabajos" },
+      { label: "Sectores", href: "/sectores" },
     ],
   },
   {
     title: "Servicios",
     links: [
       { label: "Instalaciones eléctricas", href: "/servicios" },
-      { label: "Reparaciones", href: "/servicios" },
-      { label: "Aire acondicionado", href: "/servicios" },
-      { label: "Placas solares", href: "/servicios" },
+      { label: "Energía solar", href: "/energia-solar" },
+      { label: "Climatización", href: "/climatizacion" },
+      { label: "Mantenimiento eléctrico", href: "/mantenimiento" },
+    ],
+  },
+  {
+    title: "Recursos",
+    links: [
+      { label: "Presupuesto", href: "/presupuesto" },
+      { label: "Preguntas frecuentes", href: "/preguntas-frecuentes" },
+      { label: "Consejos y artículos", href: "/consejos" },
     ],
   },
   {

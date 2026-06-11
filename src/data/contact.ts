@@ -26,12 +26,15 @@ export const CONTACT = {
   /** WhatsApp con código internacional para enlace */
   whatsappLink: "+34656183884",
   /**
-   * Mensaje predefinido al abrir WhatsApp.
-   * Para cambiarlo: edita este texto manteniendo el encodeURIComponent
-   * en los enlaces wa.me de Hero.astro, contacto.astro, etc.
+   * Mensaje predefinido al abrir WhatsApp (uso general).
    */
   whatsappMessage:
     "Hola, he visto vuestra web y me gustaría solicitar información sobre un trabajo.",
+  /**
+   * Mensaje específico para la página de presupuesto.
+   */
+  whatsappBudgetMessage:
+    "Hola, he visto vuestra web y me gustaría solicitar presupuesto para un trabajo.",
   /** Correo electrónico */
   email: "ardilayalba_instalaciones@hotmail.com",
   /**

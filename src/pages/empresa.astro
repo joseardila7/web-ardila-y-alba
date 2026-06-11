@@ -49,7 +49,7 @@ import { CONTACT, ZONE } from "../data/contact";
        BLOQUES DE PRESENTACIÓN VISUAL
        Cada bloque usa <h3> para el título
        ════════════════════════════════════════ -->
-  <section class="px-4 py-20 md:py-28">
+  <section class="px-4 py-20 md:py-28 reveal-up">
     <div class="mx-auto max-w-7xl">
       <SectionTitle
         title="¿Quiénes somos?"
@@ -58,7 +58,7 @@ import { CONTACT, ZONE } from "../data/contact";
 
       <div class="mx-auto max-w-5xl space-y-12">
         <!-- Bloque: Profesionalidad -->
-        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-fill-mode: both;">
+        <article class="flex flex-col items-center gap-8 md:flex-row reveal-up">
           <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
             <span class="text-5xl">👔</span>
           </div>
@@ -71,7 +71,7 @@ import { CONTACT, ZONE } from "../data/contact";
         </article>
 
         <!-- Bloque: Cercanía -->
-        <article class="flex flex-col items-center gap-8 md:flex-row-reverse animate-fade-up" style="animation-delay: 100ms; animation-fill-mode: both;">
+        <article class="flex flex-col items-center gap-8 md:flex-row-reverse reveal-up" style="transition-delay: 100ms;">
           <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
             <span class="text-5xl">🤝</span>
           </div>
@@ -84,7 +84,7 @@ import { CONTACT, ZONE } from "../data/contact";
         </article>
 
         <!-- Bloque: Compromiso -->
-        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-delay: 200ms; animation-fill-mode: both;">
+        <article class="flex flex-col items-center gap-8 md:flex-row reveal-up" style="transition-delay: 200ms;">
           <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
             <span class="text-5xl">🎯</span>
           </div>
@@ -97,7 +97,7 @@ import { CONTACT, ZONE } from "../data/contact";
         </article>
 
         <!-- Bloque: Seguridad -->
-        <article class="flex flex-col items-center gap-8 md:flex-row-reverse animate-fade-up" style="animation-delay: 300ms; animation-fill-mode: both;">
+        <article class="flex flex-col items-center gap-8 md:flex-row-reverse reveal-up" style="transition-delay: 300ms;">
           <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
             <span class="text-5xl">🛡️</span>
           </div>
@@ -110,7 +110,7 @@ import { CONTACT, ZONE } from "../data/contact";
         </article>
 
         <!-- Bloque: Soluciones adaptadas -->
-        <article class="flex flex-col items-center gap-8 md:flex-row animate-fade-up" style="animation-delay: 400ms; animation-fill-mode: both;">
+        <article class="flex flex-col items-center gap-8 md:flex-row reveal-up" style="transition-delay: 400ms;">
           <div class="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl bg-brand-accent/10 transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" aria-hidden="true">
             <span class="text-5xl">🔧</span>
           </div>
@@ -128,9 +128,9 @@ import { CONTACT, ZONE } from "../data/contact";
   <!-- ════════════════════════════════════════
        UBICACIÓN Y ZONA DE TRABAJO
        ════════════════════════════════════════ -->
-  <section class="bg-gradient-to-br from-brand-accent to-brand-accent-light px-4 py-20 md:py-28">
+  <section class="bg-gradient-to-br from-brand-accent to-brand-accent-light px-4 py-20 md:py-28 reveal-up">
     <div class="mx-auto max-w-7xl text-center">
-      <div class="animate-fade-up mx-auto max-w-3xl">
+      <div class="reveal-up mx-auto max-w-3xl">
         <h2 class="mb-4 text-3xl font-bold text-brand-dark md:text-4xl">
           Empresa de instalaciones eléctricas en {ZONE.areas[0]}
         </h2>
@@ -140,14 +140,14 @@ import { CONTACT, ZONE } from "../data/contact";
         <div class="flex flex-wrap justify-center gap-3 mb-8">
           {ZONE.areas.map((area, i) => (
             <span
-              class="animate-fade-up rounded-full bg-white/80 px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm"
-              style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}
+              class="reveal-up chip-hover rounded-full bg-white/80 px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm"
+              style={`transition-delay: ${i * 100}ms;`}
             >
               {area}
             </span>
           ))}
         </div>
-        <div class="animate-fade-up flex flex-col items-center justify-center gap-4 sm:flex-row" style="animation-delay: 400ms; animation-fill-mode: both;">
+        <div class="reveal-up flex flex-col items-center justify-center gap-4 sm:flex-row" style="transition-delay: 400ms;">
           <Button variant="primary" size="lg" href="/contacto">
             {CONTACT.quoteLabel}
           </Button>
@@ -167,7 +167,7 @@ import { CONTACT, ZONE } from "../data/contact";
   <!-- ════════════════════════════════════════
        SECCIÓN: VALORES (desde company.ts)
        ════════════════════════════════════════ -->
-  <section id="valores" class="bg-brand-surface-alt px-4 py-20 md:py-28">
+  <section id="valores" class="bg-brand-surface-alt px-4 py-20 md:py-28 reveal-up">
     <div class="mx-auto max-w-7xl">
       <SectionTitle
         title="Nuestros valores"

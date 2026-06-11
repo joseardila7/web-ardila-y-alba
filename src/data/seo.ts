@@ -61,27 +61,27 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   index: {
     title: "Inicio — Instalaciones eléctricas en Villanueva del Trabuco",
     description:
-      "Ardila y Alba Instalaciones S.L. Empresa de instalaciones eléctricas, placas solares, aire acondicionado y mantenimiento en Villanueva del Trabuco y Málaga.",
+      "Ardila y Alba Instalaciones S.L. Empresa de instalaciones eléctricas, placas solares, aire acondicionado y mantenimiento en Villanueva del Trabuco y Málaga. Solicita presupuesto sin compromiso.",
   },
   servicios: {
     title: "Servicios — Instalaciones eléctricas y climatización",
     description:
-      "Servicios profesionales de instalaciones eléctricas, reparaciones, mantenimiento, placas solares, aire acondicionado y más en Villanueva del Trabuco y Málaga.",
+      "Servicios profesionales de instalaciones eléctricas, reparaciones, mantenimiento, placas solares, aire acondicionado y más. Solicita presupuesto sin compromiso en Villanueva del Trabuco y Málaga.",
   },
   trabajos: {
     title: "Trabajos realizados — Galería de proyectos",
     description:
-      "Conoce algunos de nuestros trabajos. Próximamente con imágenes reales de instalaciones eléctricas, climatización y energía solar.",
+      "Conoce algunos de nuestros trabajos en instalaciones eléctricas, climatización y energía solar. Contacta para presupuesto sin compromiso en Málaga.",
   },
   empresa: {
     title: "Sobre nosotros — Ardila y Alba Instalaciones",
     description:
-      "Empresa de instalaciones eléctricas en Villanueva del Trabuco (Málaga). Conoce nuestros valores: profesionalidad, cercanía, compromiso y seguridad.",
+      "Empresa de instalaciones eléctricas en Villanueva del Trabuco (Málaga). Conoce nuestros valores: profesionalidad, cercanía, compromiso y seguridad. Solicita presupuesto.",
   },
   contacto: {
     title: "Contacto — Solicita presupuesto sin compromiso",
     description:
-      "Contacta con Ardila y Alba Instalaciones por teléfono, WhatsApp o email. Solicita presupuesto sin compromiso para instalaciones eléctricas en Málaga.",
+      "Contacta con Ardila y Alba Instalaciones por teléfono, WhatsApp o email. Solicita presupuesto sin compromiso para instalaciones eléctricas en Villanueva del Trabuco y Málaga.",
   },
   "aviso-legal": {
     title: "Aviso legal — Ardila y Alba Instalaciones",
@@ -102,5 +102,40 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Mensaje enviado — Gracias",
     description:
       "Gracias por contactar con Ardila y Alba Instalaciones. Hemos recibido tu mensaje y te responderemos lo antes posible.",
+  },
+  presupuesto: {
+    title: "Presupuesto — Solicita presupuesto sin compromiso",
+    description:
+      "Solicita presupuesto sin compromiso para instalaciones eléctricas, climatización, placas solares y más en Villanueva del Trabuco y Málaga.",
+  },
+  sectores: {
+    title: "Sectores — Soluciones para particulares, empresas y comunidades",
+    description:
+      "Soluciones profesionales adaptadas a cada sector: particulares, empresas, comunidades, locales comerciales y naves en Málaga.",
+  },
+  "preguntas-frecuentes": {
+    title: "Preguntas frecuentes — Resuelve tus dudas",
+    description:
+      "Respuestas a las preguntas más frecuentes sobre instalaciones eléctricas, presupuestos, climatización y servicios en Villanueva del Trabuco.",
+  },
+  consejos: {
+    title: "Consejos y artículos — Información útil",
+    description:
+      "Artículos y consejos sobre instalaciones eléctricas, climatización, energía solar y mantenimiento para hogares y negocios.",
+  },
+  "energia-solar": {
+    title: "Energía solar — Instalación de placas solares",
+    description:
+      "Instalación de placas solares y sistemas de energía solar fotovoltaica para autoconsumo en viviendas y negocios en Málaga.",
+  },
+  climatizacion: {
+    title: "Climatización — Aire acondicionado y climatización",
+    description:
+      "Instalación y mantenimiento de sistemas de climatización y aire acondicionado para hogares, locales y oficinas en Málaga.",
+  },
+  mantenimiento: {
+    title: "Mantenimiento eléctrico — Revisiones periódicas",
+    description:
+      "Revisión y mantenimiento periódico de instalaciones eléctricas para garantizar su seguridad y correcto funcionamiento en Málaga.",
   },
 } as const;

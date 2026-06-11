@@ -1,124 +1,140 @@
 ---
-// =============================================
-// INICIO — Página principal
-// =============================================
-// Secciones en orden:
-//   1. Hero (portada — contiene el único <h1>)
-//   2. Servicios destacados (<h2>)
-//   3. Por qué elegirnos — valores (<h2>)
-//   4. Galería de trabajos — placeholders (<h2>)
-//   5. Zona de actuación (<h2>)
-//
-// Animaciones:
-//   - Cada sección tiene fade-up de entrada
-//   - Las tarjetas tienen aparición escalonada
-//   - Los elementos decorativos tienen flotación
-// =============================================
-
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import ValuesBlock from "../components/ValuesBlock.astro";
 import GalleryPlaceholder from "../components/GalleryPlaceholder.astro";
+import CTABanner from "../components/CTABanner.astro";
 import { COMPANY } from "../data/company";
 import { SERVICES } from "../data/services";
 import { ZONE } from "../data/contact";
-import { HOME_SERVICES, HOME_WHY_US, HOME_WORKS, HOME_ZONE } from "../data/home";
+import {
+  HOME_SERVICES,
+  HOME_SOLUTIONS,
+  HOME_PROCESS,
+  HOME_TRUST,
+  HOME_ZONE,
+  HOME_CTA,
+} from "../data/home";
 ---
 
 <Layout
   title="Inicio"
   description={`${COMPANY.shortName}. Instalaciones eléctricas, placas solares, aire acondicionado y mantenimiento en Villanueva del Trabuco y Málaga. Solicita presupuesto sin compromiso.`}
 >
-  <!-- ════════════════════════════════════════
-       HERO — Portada principal
-       El <h1> está dentro del componente Hero
-       ════════════════════════════════════════ -->
   <Hero />
 
-  <!-- ════════════════════════════════════════
-       SERVICIOS DESTACADOS (featured = true)
-       ════════════════════════════════════════ -->
-  <section class="px-4 py-20 md:py-28" aria-labelledby="servicios-title">
+  <section class="reveal-up px-4 py-20 md:py-28" aria-labelledby="servicios-title">
     <div class="mx-auto max-w-7xl">
       <SectionTitle
-        title="Nuestros servicios"
+        title={HOME_SERVICES.title}
         subtitle={HOME_SERVICES.subtitle}
       />
 
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.filter((s) => s.featured).map((service, i) => (
-          <div class="animate-fade-up" style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}>
+          <div class="reveal-up card-hover card-glow rounded-xl" style={`transition-delay: ${i * 100}ms;`}>
             <ServiceCard service={service} />
           </div>
         ))}
       </div>
 
-      <div class="mt-10 text-center animate-fade-up" style="animation-delay: 400ms; animation-fill-mode: both;">
+      <div class="mt-10 text-center reveal-up" style="transition-delay: 400ms;">
         <a
           href="/servicios"
-          class="inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors duration-200 hover:text-brand-accent"
-          aria-label="Ver todos los servicios de instalaciones"
+          class="group inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors duration-200 hover:text-brand-accent"
         >
           Ver todos los servicios
-          <span aria-hidden="true" class="text-lg">→</span>
+          <span aria-hidden="true" class="link-arrow text-lg">→</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════
-       POR QUÉ ELEGIRNOS (valores)
-       ════════════════════════════════════════ -->
-  <section class="bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="valores-title">
+  <section class="reveal-up bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="soluciones-title">
     <div class="mx-auto max-w-7xl">
-      <SectionTitle
-        title="¿Por qué elegirnos?"
-        subtitle={HOME_WHY_US.subtitle}
-      />
+      <SectionTitle title={HOME_SOLUTIONS.title} subtitle={HOME_SOLUTIONS.subtitle} />
 
-      {/* Cada tarjeta de valor contiene un <h3> */}
-      <ValuesBlock />
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════
-       GALERÍA DE TRABAJOS (placeholders)
-       ════════════════════════════════════════ -->
-  <section class="px-4 py-20 md:py-28" aria-labelledby="trabajos-title">
-    <div class="mx-auto max-w-7xl">
-      <SectionTitle
-        title="Algunos de nuestros trabajos"
-        subtitle={HOME_WORKS.subtitle}
-      />
-
-      <GalleryPlaceholder count={6} columns={3} />
-
-      <div class="mt-10 text-center animate-fade-up" style="animation-delay: 600ms; animation-fill-mode: both;">
-        <a
-          href="/trabajos"
-          class="inline-flex items-center gap-2 font-semibold text-brand-primary transition-colors duration-200 hover:text-brand-accent"
-        >
-          Ver más trabajos
-          <span aria-hidden="true" class="text-lg">→</span>
-        </a>
+      <div class="grid gap-6 sm:grid-cols-3">
+        {HOME_SOLUTIONS.items.map((item, i) => (
+          <a
+            href={item.href}
+            class="reveal-up group block no-underline"
+            style={`transition-delay: ${i * 100}ms`}
+          >
+            <article class="flex h-full flex-col items-center rounded-xl border border-gray-100 bg-white p-8 text-center shadow-sm card-hover card-glow">
+              <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-accent/10 text-3xl transition-[transform,background-color] duration-300 group-hover:scale-110 group-hover:bg-brand-accent/20">
+                <span aria-hidden="true">{item.icon}</span>
+              </div>
+              <h3 class="mb-2 text-lg font-bold text-brand-dark transition-colors duration-300 group-hover:text-brand-accent">
+                {item.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-gray-600">{item.description}</p>
+            </article>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════
-       ZONA DE ACTUACIÓN
-       ════════════════════════════════════════ -->
-  <section class="bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="zona-title">
+  <section class="reveal-up px-4 py-20 md:py-28" aria-labelledby="proceso-title">
+    <div class="mx-auto max-w-5xl">
+      <SectionTitle title={HOME_PROCESS.title} subtitle={HOME_PROCESS.subtitle} />
+
+      <div class="relative">
+        <div class="absolute left-8 top-0 hidden h-full w-0.5 bg-brand-accent/20 md:block" aria-hidden="true"></div>
+
+        <div class="space-y-8 md:space-y-0">
+          {HOME_PROCESS.steps.map((step, i) => (
+            <div
+              class="reveal-up group relative md:flex md:items-start md:gap-8"
+              style={`transition-delay: ${i * 100}ms`}
+            >
+              <div class="mb-4 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand-accent text-lg font-bold text-brand-dark shadow-sm transition-[transform,box-shadow] duration-300 group-hover:scale-110 group-hover:shadow-md md:mb-0">
+                {step.step}
+              </div>
+              <div class="md:pt-3">
+                <h3 class="mb-1 text-xl font-bold text-brand-dark">{step.title}</h3>
+                <p class="text-gray-600">{step.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal-up px-4 py-20 md:py-28" aria-labelledby="confianza-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionTitle title={HOME_TRUST.title} subtitle={HOME_TRUST.subtitle} />
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {HOME_TRUST.items.map((item, i) => (
+          <div
+            class="reveal-up card-hover card-glow group rounded-xl border border-gray-100 bg-white p-6 text-center shadow-sm"
+            style={`transition-delay: ${i * 100}ms`}
+          >
+            <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent/10 text-2xl transition-[transform,background-color] duration-300 group-hover:scale-110 group-hover:bg-brand-accent/20">
+              <span aria-hidden="true">{item.icon}</span>
+            </div>
+            <h3 class="mb-2 font-semibold text-brand-dark transition-colors duration-300 group-hover:text-brand-accent">{item.title}</h3>
+            <p class="text-sm leading-relaxed text-gray-600">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal-up bg-brand-surface-alt px-4 py-20 md:py-28" aria-labelledby="zona-title">
     <div class="mx-auto max-w-7xl">
       <SectionTitle title={ZONE.title} subtitle={ZONE.description} />
 
       <div class="flex flex-wrap justify-center gap-3">
         {ZONE.areas.map((area, i) => (
           <span
-            class="animate-fade-up rounded-full border border-brand-primary/10 bg-white px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm transition-colors duration-200 hover:border-brand-accent/30 hover:bg-brand-accent/5"
-            style={`animation-delay: ${i * 100}ms; animation-fill-mode: both;`}
+            class="reveal-up chip-hover rounded-full border border-brand-primary/10 bg-white px-5 py-2.5 text-sm font-medium text-brand-dark shadow-sm"
+            style={`transition-delay: ${i * 100}ms`}
           >
             {area}
           </span>
@@ -126,4 +142,9 @@ import { HOME_SERVICES, HOME_WHY_US, HOME_WORKS, HOME_ZONE } from "../data/home"
       </div>
     </div>
   </section>
+
+  <CTABanner
+    title={HOME_CTA.title}
+    subtitle={HOME_CTA.subtitle}
+  />
 </Layout>

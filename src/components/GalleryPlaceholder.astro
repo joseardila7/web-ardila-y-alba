@@ -34,11 +34,11 @@ const items = Array.from({ length: count }, (_, i) => {
 });
 ---
 
-<div class={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridCols[columns]} ${className}`}>
+<div class={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridCols[columns]} ${className} reveal-up`}>
   {items.map((item) => (
     <div
-      class="group relative flex aspect-video animate-fade-up items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-surface-alt to-gray-200 shadow-sm transition-colors duration-200 hover:shadow-sm"
-      style={`animation-delay: ${item.id * 80}ms; animation-fill-mode: both;`}
+      class="group relative flex aspect-video reveal-up stagger-item items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-surface-alt to-gray-200 shadow-sm transition-colors duration-200 hover:shadow-sm"
+      style={`--stagger-index: ${item.id};`}
     >
       {/* Placeholder visual con categoría */}
       <div class="text-center">

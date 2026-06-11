@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { SECTORS } from "../data/sectors";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Sectores"
+  description={`Soluciones profesionales para particulares, empresas, comunidades y más. ${COMPANY.shortName} adapta sus servicios a cada tipo de cliente.`}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Soluciones para cada sector
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-white/70">
+        Adaptamos nuestros servicios a las necesidades específicas de cada tipo de cliente, ofreciendo soluciones profesionales y personalizadas.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal-up px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl">
+      <div class="reveal-up grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {SECTORS.map((sector, i) => (
+          <article
+            id={sector.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")}
+            class="reveal-up card-hover group rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/30"
+            style={`transition-delay: ${i * 100}ms`}
+          >
+            <div class="group-icon mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-brand-accent/10 text-2xl transition-colors duration-200 group-hover:bg-brand-accent/20" aria-hidden="true">
+              <span>{sector.icon}</span>
+            </div>
+            <h2 class="mb-3 text-xl font-bold text-brand-dark">{sector.title}</h2>
+            <p class="mb-4 text-sm leading-relaxed text-gray-600">{sector.description}</p>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">Servicios relacionados</p>
+              <div class="flex flex-wrap gap-1.5">
+                {sector.services.map((service) => (
+                  <span class="chip-hover rounded-full bg-brand-surface-alt px-2.5 py-1 text-xs text-gray-600">
+                    {service}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="¿No sabes qué servicio necesitas?"
+    subtitle="Cuéntanos tu caso y te orientaremos sin compromiso."
+  />
+</Layout>

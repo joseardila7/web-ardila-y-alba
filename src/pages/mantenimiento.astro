@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Mantenimiento eléctrico"
+  description={`Revisión y mantenimiento periódico de instalaciones eléctricas. ${COMPANY.shortName} garantiza el correcto funcionamiento y seguridad de tus instalaciones.`}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Mantenimiento eléctrico
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-white/70">
+        Revisiones periódicas y mantenimiento de instalaciones eléctricas para garantizar su seguridad y correcto funcionamiento.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal-up px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-5xl">
+      <SectionTitle
+        title="Mantenimiento de instalaciones eléctricas"
+        subtitle="Un mantenimiento adecuado alarga la vida útil de las instalaciones y previene averías y riesgos eléctricos."
+      />
+
+      <div class="reveal-up grid gap-8 md:grid-cols-2">
+        <div class="reveal-left space-y-4" style="transition-delay: 0ms;">
+          <h3 class="text-xl font-bold text-brand-dark">¿Qué incluye?</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Revisión visual del estado de cables, enchufes e interruptores</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Comprobación del cuadro eléctrico y dispositivos de protección</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Verificación del correcto funcionamiento de tomas de tierra</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Detección de posibles puntos calientes o sobrecargas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Informe del estado de la instalación con recomendaciones</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal-right space-y-4" style="transition-delay: 100ms;">
+          <h3 class="text-xl font-bold text-brand-dark">¿Para quién?</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Viviendas que quieran garantizar la seguridad de su instalación</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Comunidades de vecinos para el mantenimiento de zonas comunes</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Empresas y negocios que necesiten mantener sus instalaciones en correcto estado</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Instalaciones antiguas que requieran una revisión antes de reformar</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="¿Quieres revisar tu instalación eléctrica?"
+    subtitle="Solicita información sin compromiso y te orientaremos."
+  />
+</Layout>

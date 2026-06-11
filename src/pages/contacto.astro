@@ -31,7 +31,7 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
   title="Contacto"
   description={`Contacta con ${COMPANY.shortName}. Teléfono, WhatsApp, email y formulario para solicitar presupuesto sin compromiso.`}
 >
-  <section class="px-4 py-20 md:py-28">
+  <section class="px-4 py-20 md:py-28 reveal-up">
     <div class="mx-auto max-w-7xl">
       {/* <h1> se genera dentro de SectionTitle */}
       <SectionTitle
@@ -45,7 +45,7 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
              ════════════════════════════════════════ -->
         <div class="space-y-6">
           <!-- Teléfono — visible como texto para SEO -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">Teléfono</h2>
             <a
               href={`tel:${CONTACT.phoneLink}`}
@@ -58,7 +58,7 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
           </div>
 
           <!-- WhatsApp -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 100ms; animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="transition-delay: 100ms;">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">WhatsApp</h2>
             <a
               href={`https://wa.me/${CONTACT.whatsappLink}?text=${encodeURIComponent(CONTACT.whatsappMessage)}`}
@@ -73,7 +73,7 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
           </div>
 
           <!-- Email -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 200ms; animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="transition-delay: 200ms;">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">Email</h2>
             <a
               href={`mailto:${CONTACT.email}`}
@@ -84,13 +84,13 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
           </div>
 
           <!-- Dirección -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 300ms; animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="transition-delay: 300ms;">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">Dirección</h2>
             <p class="text-gray-700">{CONTACT.address}</p>
           </div>
 
           <!-- Horario -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 400ms; animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="transition-delay: 400ms;">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">{SCHEDULE.title}</h2>
             <ul class="space-y-1.5 text-gray-700">
               {SCHEDULE.details.map((d) => (
@@ -103,12 +103,12 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
           </div>
 
           <!-- Zona de actuación -->
-          <div class="animate-fade-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="animation-delay: 500ms; animation-fill-mode: both;">
+          <div class="reveal-up rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-accent/20 hover:shadow-sm" style="transition-delay: 500ms;">
             <h2 class="mb-2 text-lg font-semibold text-brand-dark">{ZONE.title}</h2>
             <p class="mb-3 text-sm text-gray-600">{ZONE.description}</p>
             <div class="flex flex-wrap gap-2">
               {ZONE.areas.map((area) => (
-                <span class="rounded-full bg-brand-accent/10 px-3 py-1 text-xs font-medium text-brand-accent-dark transition-colors duration-200 hover:bg-brand-accent/20">
+                <span class="chip-hover rounded-full bg-brand-accent/10 px-3 py-1 text-xs font-medium text-brand-accent-dark">
                   {area}
                 </span>
               ))}
@@ -116,12 +116,12 @@ import { CONTACT, SCHEDULE, ZONE } from "../data/contact";
           </div>
 
           <!-- Botones rápidos de acción -->
-          <div class="animate-fade-up flex flex-wrap gap-3" style="animation-delay: 600ms; animation-fill-mode: both;">
-            <Button variant="accent" href={`tel:${CONTACT.phoneLink}`}>
+          <div class="reveal-up flex flex-wrap gap-3" style="transition-delay: 600ms;">
+            <Button variant="primary" href={`tel:${CONTACT.phoneLink}`}>
               {CONTACT.callLabel}
             </Button>
             <Button
-              variant="primary"
+              variant="whatsapp"
               href={`https://wa.me/${CONTACT.whatsappLink}?text=${encodeURIComponent(CONTACT.whatsappMessage)}`}
               target="_blank"
               rel="noreferrer"

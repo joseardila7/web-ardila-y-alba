@@ -1,0 +1,56 @@
+---
+import Button from "./Button.astro";
+import { CONTACT } from "../data/contact";
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  primaryLabel = "Pide presupuesto",
+  primaryHref = "/presupuesto",
+  class: className = "",
+} = Astro.props;
+---
+
+<section class={`relative overflow-hidden bg-gradient-to-br from-brand-accent to-brand-accent-light px-4 py-20 md:py-28 ${className}`}>
+  {/* Formas decorativas */}
+  <div class="pointer-events-none absolute -right-32 -top-32 h-64 w-64 rounded-full bg-brand-dark/[0.04]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-brand-dark/[0.04]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-brand-dark/10 to-transparent" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute bottom-0 left-1/2 h-px w-1/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-brand-dark/8 to-transparent" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -left-8 top-1/4 h-16 w-16 rounded-full bg-brand-dark/[0.03]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -right-8 bottom-1/4 h-12 w-12 rounded-full bg-brand-dark/[0.03]" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-3xl text-center">
+    <div class="reveal-up">
+      <h2 class="mb-4 text-3xl font-bold text-brand-dark md:text-4xl">
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="mx-auto mb-8 max-w-2xl text-lg text-brand-dark/80">
+          {subtitle}
+        </p>
+      )}
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button variant="primary" size="lg" href={primaryHref} class="button-shine">
+          {primaryLabel}
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          href={`tel:${CONTACT.phoneLink}`}
+          class="border-brand-dark/40 text-brand-dark hover:bg-brand-dark hover:text-white"
+        >
+          {CONTACT.callLabel}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

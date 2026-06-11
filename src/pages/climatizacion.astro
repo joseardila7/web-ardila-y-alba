@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import CTABanner from "../components/CTABanner.astro";
+import Button from "../components/Button.astro";
+import { CONTACT } from "../data/contact";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Climatización"
+  description={`Instalación y mantenimiento de aire acondicionado y sistemas de climatización. ${COMPANY.shortName} en Villanueva del Trabuco y Málaga.`}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        Climatización
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-white/70">
+        Instalación y mantenimiento de sistemas de climatización y aire acondicionado para hogares, locales y oficinas.
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal-up px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-5xl">
+      <SectionTitle
+        title="Aire acondicionado y climatización"
+        subtitle="Soluciones de climatización eficientes adaptadas a cada espacio, tanto para particulares como para empresas."
+      />
+
+      <div class="reveal-up grid gap-8 md:grid-cols-2">
+        <div class="reveal-left space-y-4" style="transition-delay: 0ms;">
+          <h3 class="text-xl font-bold text-brand-dark">Servicios de climatización</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Instalación de equipos de aire acondicionado split y multisplit</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Sistemas de climatización por conductos</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Mantenimiento y revisión de equipos existentes</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Reparación de averías en sistemas de climatización</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Asesoramiento sobre el equipo más adecuado para cada espacio</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal-right space-y-4" style="transition-delay: 100ms;">
+          <h3 class="text-xl font-bold text-brand-dark">¿Dónde instalamos?</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Viviendas particulares: dormitorios, salones, reformas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Locales comerciales: tiendas, restaurantes, oficinas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-accent" aria-hidden="true"></span>
+              <span class="text-gray-600">Naves y espacios de trabajo</span>
+            </li>
+          </ul>
+          <p class="mt-4 text-sm text-gray-500">
+            La elección del equipo depende de las características del espacio, el uso previsto y las necesidades de cada cliente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="¿Necesitas climatizar un espacio?"
+    subtitle="Te asesoramos sobre la mejor solución sin compromiso."
+  />
+</Layout>

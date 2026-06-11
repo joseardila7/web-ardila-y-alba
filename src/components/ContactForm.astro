@@ -7,21 +7,24 @@ const SUCCESS_MSG = "Mensaje enviado correctamente. Gracias por contactar con Ar
 const ERROR_MSG = "No se ha podido enviar el mensaje. Inténtalo de nuevo o contacta por teléfono o WhatsApp.";
 
 const inputBase =
-  "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm transition-colors duration-200 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/40";
+  "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm input-premium";
 
 const selectBase = inputBase + " appearance-none";
 const selectStyle = `background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236b7280' d='M4.646 5.646a.5.5 0 0 1 .708 0L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1rem;`;
 
-const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-200 no-underline cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-brand-accent focus-visible:outline-offset-2 active:scale-[0.97] px-8 py-3 text-lg bg-brand-accent hover:bg-brand-accent-dark text-brand-dark font-semibold shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100";
+const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 no-underline cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-brand-accent focus-visible:outline-offset-2 active:scale-[0.97] px-8 py-3 text-lg bg-brand-accent hover:bg-brand-accent-dark text-brand-dark font-semibold shadow-sm hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100";
 ---
 
 <form
   id="contact-form"
   action={FORMSPREE_URL}
   method="POST"
-  class="rounded-xl bg-white p-6 shadow-sm animate-fade-up md:p-8"
+  class="rounded-xl bg-white p-6 shadow-sm reveal-up md:p-8"
   aria-label="Formulario de contacto"
 >
+  <p class="mb-6 text-sm text-gray-500">
+    Cuanta más información nos facilites, mejor podremos orientarte.
+  </p>
   <input type="hidden" name="subject" value={EMAIL_SUBJECT} />
 
   <div class="mb-4 grid gap-4 md:grid-cols-2">
@@ -29,14 +32,14 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
       <label for="nombre" class="mb-1.5 block text-sm font-medium text-gray-700">
         Nombre <span class="text-red-400">*</span>
       </label>
-      <input type="text" id="nombre" name="nombre" required autocomplete="name" placeholder="Ej: María García" class={inputBase} />
+      <input type="text" id="nombre" name="nombre" required aria-required="true" autocomplete="name" placeholder="Ej: María García" class={inputBase} />
     </div>
 
     <div>
       <label for="telefono" class="mb-1.5 block text-sm font-medium text-gray-700">
         Teléfono <span class="text-red-400">*</span>
       </label>
-      <input type="tel" id="telefono" name="telefono" required autocomplete="tel" placeholder="000 000 000" class={inputBase} />
+      <input type="tel" id="telefono" name="telefono" required aria-required="true" autocomplete="tel" placeholder="000 000 000" class={inputBase} />
     </div>
   </div>
 
@@ -44,14 +47,14 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
     <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700">
       Email <span class="text-red-400">*</span>
     </label>
-    <input type="email" id="email" name="email" required autocomplete="email" placeholder="tuemail@ejemplo.com" class={inputBase} />
+    <input type="email" id="email" name="email" required aria-required="true" autocomplete="email" placeholder="tuemail@ejemplo.com" class={inputBase} />
   </div>
 
   <div class="mb-4">
     <label for="servicio" class="mb-1.5 block text-sm font-medium text-gray-700">
       Tipo de servicio <span class="text-red-400">*</span>
     </label>
-    <select id="servicio" name="servicio" required class={selectBase} style={selectStyle}>
+    <select id="servicio" name="servicio" required aria-required="true" class={selectBase} style={selectStyle}>
       <option value="" selected>Selecciona un servicio</option>
       {SERVICE_TYPES.filter((t) => t !== "Selecciona un servicio").map((type) => (
         <option value={type}>{type}</option>
@@ -63,7 +66,7 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
     <label for="localidad" class="mb-1.5 block text-sm font-medium text-gray-700">
       Localidad <span class="text-red-400">*</span>
     </label>
-    <input type="text" id="localidad" name="localidad" required autocomplete="address-level2" placeholder="Ej: Villanueva del Trabuco" class={inputBase} />
+    <input type="text" id="localidad" name="localidad" required aria-required="true" autocomplete="address-level2" placeholder="Ej: Villanueva del Trabuco" class={inputBase} />
   </div>
 
   <div class="mb-4">
@@ -75,8 +78,8 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
 
   <div class="mb-4">
     <label class="flex items-start gap-3 cursor-pointer">
-      <input type="checkbox" id="privacidad" name="privacidad" value="Aceptada" required
-        class="mt-1 h-4 w-4 shrink-0 rounded border-gray-300 text-brand-accent focus:ring-brand-accent/40"
+      <input type="checkbox" id="privacidad" name="privacidad" value="Aceptada" required aria-required="true"
+        class="mt-0.5 h-5 w-5 shrink-0 rounded border-gray-300 text-brand-accent focus:ring-brand-accent/40 focus:ring-offset-1 transition-colors duration-200"
       />
       <span class="text-sm text-gray-600">
         He leído y acepto la
@@ -92,7 +95,11 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
 
   <div>
     <button type="submit" id="submit-btn" class={btnBase}>
-      Enviar mensaje
+      <span id="submit-text">Enviar mensaje</span>
+      <svg id="submit-spinner" class="hidden h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+      </svg>
     </button>
   </div>
 </form>
@@ -101,8 +108,10 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
   const form = document.getElementById("contact-form");
   const status = document.getElementById("form-status");
   const submitBtn = document.getElementById("submit-btn");
-  const SUCCESS_HTML = `<div class="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">Mensaje enviado correctamente. Gracias por contactar con Ardila y Alba Instalaciones.</div>`;
-  const ERROR_HTML = `<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">No se ha podido enviar el mensaje. Inténtalo de nuevo o contacta por teléfono o WhatsApp.</div>`;
+  const submitText = document.getElementById("submit-text");
+  const submitSpinner = document.getElementById("submit-spinner");
+  const SUCCESS_HTML = `<div class="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800"><span class="font-semibold">Mensaje enviado.</span> Gracias por contactar con Ardila y Alba Instalaciones.</div>`;
+  const ERROR_HTML = `<div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"><span class="font-semibold">Error al enviar.</span> Inténtalo de nuevo o contacta por teléfono o WhatsApp.</div>`;
 
   if (form && status && submitBtn) {
     form.addEventListener("submit", async (e) => {
@@ -114,7 +123,8 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
       }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Enviando...";
+      if (submitText) submitText.textContent = "Enviando...";
+      if (submitSpinner) submitSpinner.classList.remove("hidden");
       status.innerHTML = "";
 
       try {
@@ -130,12 +140,14 @@ const btnBase = "w-full inline-flex items-center justify-center gap-2 rounded-lg
         } else {
           status.innerHTML = ERROR_HTML;
           submitBtn.disabled = false;
-          submitBtn.textContent = "Enviar mensaje";
+          if (submitText) submitText.textContent = "Enviar mensaje";
+          if (submitSpinner) submitSpinner.classList.add("hidden");
         }
       } catch {
         status.innerHTML = ERROR_HTML;
         submitBtn.disabled = false;
-        submitBtn.textContent = "Enviar mensaje";
+        if (submitText) submitText.textContent = "Enviar mensaje";
+        if (submitSpinner) submitSpinner.classList.add("hidden");
       }
     });
   }

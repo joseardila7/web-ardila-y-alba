@@ -1,0 +1,107 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Button from "../components/Button.astro";
+import { BUDGET_PAGE } from "../data/budget";
+import { CONTACT } from "../data/contact";
+import { COMPANY } from "../data/company";
+---
+
+<Layout
+  title="Presupuesto"
+  description={`Solicita presupuesto sin compromiso para instalaciones eléctricas en ${COMPANY.shortName}. Te orientamos sobre la mejor solución para tu proyecto.`}
+>
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand-primary to-brand-medium px-4 py-20 md:py-28">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-accent/[0.03]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-brand-light/[0.03]" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl text-center animate-fade-up">
+      <h1 class="mb-4 text-4xl font-bold text-white md:text-5xl">
+        {BUDGET_PAGE.title}
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-white/70">
+        {BUDGET_PAGE.subtitle}
+      </p>
+    </div>
+  </section>
+
+  <section class="reveal-up px-4 py-20 md:py-28">
+    <div class="mx-auto max-w-4xl">
+      <SectionTitle
+        title="Información recomendada"
+        subtitle={BUDGET_PAGE.description}
+      />
+
+      <div class="reveal-up grid gap-4 sm:grid-cols-2">
+        {BUDGET_PAGE.recommendedInfo.map((item, i) => (
+          <div
+            class="reveal-up flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-colors duration-200 hover:border-brand-accent/20"
+            style={`transition-delay: ${i * 100}ms`}
+          >
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand-accent/10 text-xl">
+              <span aria-hidden="true">{item.icon}</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-brand-dark">{item.label}</h3>
+              <p class="mt-0.5 text-sm text-gray-500">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 pb-20">
+    <div class="mx-auto max-w-4xl">
+      <div class="reveal-up rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
+        <h2 class="mb-6 text-2xl font-bold text-brand-dark">¿Cómo solicitar presupuesto?</h2>
+
+        <div class="relative grid gap-6 sm:grid-cols-3">
+          <!-- Línea conectora entre steps (solo escritorio) -->
+          <div class="pointer-events-none absolute left-[calc(16.67%+1.75rem)] right-[calc(16.67%+1.75rem)] top-7 hidden h-px bg-gradient-to-r from-brand-accent/40 via-brand-accent to-brand-accent/40 sm:block" aria-hidden="true"></div>
+
+          <div class="text-center reveal-up" style="transition-delay: 0ms">
+            <div class="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent text-xl font-bold text-brand-dark shadow-sm transition-[transform,box-shadow] duration-300 hover:scale-110 hover:shadow-md">
+              1
+            </div>
+            <h3 class="mb-1 font-semibold text-brand-dark">Cuéntanos qué necesitas</h3>
+            <p class="text-sm text-gray-500">Describe tu proyecto o avería con el máximo detalle posible.</p>
+          </div>
+          <div class="text-center reveal-up" style="transition-delay: 100ms">
+            <div class="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent text-xl font-bold text-brand-dark shadow-sm transition-[transform,box-shadow] duration-300 hover:scale-110 hover:shadow-md">
+              2
+            </div>
+            <h3 class="mb-1 font-semibold text-brand-dark">Te orientamos</h3>
+            <p class="text-sm text-gray-500">Valoramos tu caso y te proponemos la mejor solución sin compromiso.</p>
+          </div>
+          <div class="text-center reveal-up" style="transition-delay: 200ms">
+            <div class="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand-accent text-xl font-bold text-brand-dark shadow-sm transition-[transform,box-shadow] duration-300 hover:scale-110 hover:shadow-md">
+              3
+            </div>
+            <h3 class="mb-1 font-semibold text-brand-dark">Recibe tu presupuesto</h3>
+            <p class="text-sm text-gray-500">Te enviamos un presupuesto claro sin compromiso ni sorpresas.</p>
+          </div>
+        </div>
+
+        <div class="reveal-up mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button variant="accent" size="lg" href="/contacto">
+            Ir al formulario de contacto
+          </Button>
+          <Button variant="primary" size="lg" href={`tel:${CONTACT.phoneLink}`}>
+            {CONTACT.callLabel}
+          </Button>
+          <Button
+            variant="whatsapp"
+            size="lg"
+            href={`https://wa.me/${CONTACT.whatsappLink}?text=${encodeURIComponent(CONTACT.whatsappBudgetMessage)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {CONTACT.whatsappLabel}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

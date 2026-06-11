@@ -1,200 +1,387 @@
-// =============================================
-// DATOS DE SERVICIOS
-// =============================================
-// Cada servicio tiene: título, descripción,
-// icono, slug y categoría.
-//
-// NOTA: Esta lista es el catálogo inicial.
-//       Más adelante se revisará para quitar
-//       los servicios que no correspondan.
-//
-// PARA PERSONALIZAR:
-// 1. Cambia title y description por los reales.
-// 2. Sustituye los emojis por SVG si quieres.
-// 3. Añade o quita servicios del array.
-// 4. La web los mostrará automáticamente.
-// =============================================
-
 export interface Service {
-  /** Título del servicio */
   title: string;
-  /** Descripción profesional pero prudente */
   description: string;
-  /** Icono visual (emoji o ruta a SVG) */
   icon: string;
-  /** Slug para identificar el servicio (ej: en URL) */
   slug: string;
-  /** Categoría para agrupar visualmente */
   category?: string;
-  /** Si es true, aparece destacado en inicio */
   featured?: boolean;
+  benefits?: string[];
+  whenToContact?: string[];
+  relatedServices?: string[];
 }
 
 export const SERVICES: Service[] = [
-  // ══════════════════════════════════════════
-  // SERVICIOS DESTACADOS (featured = true)
-  // Se muestran en la página de inicio
-  // ══════════════════════════════════════════
   {
     title: "Instalaciones eléctricas",
-    description:
-      "Instalaciones eléctricas completas para viviendas, locales, comunidades e industrias. Proyectos adaptados a la normativa vigente.",
+    description: "Instalaciones eléctricas completas para viviendas, locales, comunidades e industrias. Proyectos adaptados a la normativa vigente.",
     icon: "⚡",
     slug: "instalaciones-electricas",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
     featured: true,
+    benefits: [
+      "Instalación desde cero adaptada al proyecto y normativa vigente",
+      "Diseño optimizado para la distribución de cargas y puntos de uso",
+      "Componentes y materiales de calidad contrastada",
+      "Certificación y legalización de la instalación",
+    ],
+    whenToContact: [
+      "Estás construyendo una vivienda o local y necesitas la instalación completa",
+      "Vas a reformar y quieres actualizar toda la instalación eléctrica",
+      "Necesitas una instalación nueva para una ampliación o cambio de uso",
+    ],
+    relatedServices: ["cuadros-electricos", "reformas-electricas", "instalaciones-viviendas"],
   },
   {
     title: "Placas solares",
-    description:
-      "Instalación de sistemas de energía solar fotovoltaica para autoconsumo. Aprovecha la energía renovable y reduce tu factura eléctrica.",
+    description: "Instalación de sistemas de energía solar fotovoltaica para autoconsumo. Aprovecha la energía renovable y reduce tu factura eléctrica.",
     icon: "☀️",
     slug: "placas-solares",
-    category: "Solar",
+    category: "Energía y eficiencia",
     featured: true,
+    benefits: [
+      "Estudio de viabilidad técnico previo sin compromiso",
+      "Dimensionamiento del sistema según el consumo real del inmueble",
+      "Instalación de paneles, inversores y componentes necesarios",
+      "Información sobre ayudas y subvenciones disponibles",
+    ],
+    whenToContact: [
+      "Quieres reducir tu factura eléctrica aprovechando la energía solar",
+      "Dispones de espacio en cubierta o terreno para la instalación",
+      "Te gustaría conocer las opciones de autoconsumo para tu vivienda o negocio",
+    ],
+    relatedServices: ["instalaciones-electricas", "mantenimiento-electrico", "iluminacion-led"],
   },
   {
     title: "Aire acondicionado",
-    description:
-      "Instalación y mantenimiento de sistemas de aire acondicionado. Climatización eficiente para hogares y locales comerciales.",
+    description: "Instalación y mantenimiento de sistemas de aire acondicionado. Climatización eficiente para hogares y locales comerciales.",
     icon: "❄️",
     slug: "aire-acondicionado",
-    category: "Climatización",
+    category: "Climatización y equipos",
     featured: true,
+    benefits: [
+      "Asesoramiento sobre el equipo más adecuado para cada espacio",
+      "Instalación profesional de splits, multisplit y sistemas por conductos",
+      "Mantenimiento y revisión de equipos existentes",
+      "Reparación de averías en sistemas de climatización",
+    ],
+    whenToContact: [
+      "Necesitas instalar aire acondicionado en una vivienda o local",
+      "Tu equipo actual no enfría correctamente o da problemas",
+      "Quieres realizar una revisión antes de la temporada de calor",
+    ],
+    relatedServices: ["climatizacion", "instalaciones-viviendas", "mantenimiento-electrico"],
   },
   {
     title: "Mantenimiento eléctrico",
-    description:
-      "Revisión y mantenimiento periódico de instalaciones eléctricas para garantizar su correcto funcionamiento y seguridad.",
+    description: "Revisión y mantenimiento periódico de instalaciones eléctricas para garantizar su correcto funcionamiento y seguridad.",
     icon: "🛠️",
     slug: "mantenimiento-electrico",
-    category: "Instalaciones eléctricas",
+    category: "Energía y eficiencia",
     featured: true,
+    benefits: [
+      "Revisión visual del estado de cables, enchufes e interruptores",
+      "Comprobación del cuadro eléctrico y dispositivos de protección",
+      "Verificación de tomas de tierra y continuidad",
+      "Detección de posibles puntos calientes o sobrecargas",
+    ],
+    whenToContact: [
+      "Hace tiempo que no revisas tu instalación eléctrica",
+      "Notas olores a quemado, chispazos o calentamiento en enchufes",
+      "Tu instalación es antigua y quieres verificar su estado",
+      "Necesitas un informe del estado de la instalación",
+    ],
+    relatedServices: ["reparaciones-electricas", "instalaciones-electricas", "cuadros-electricos"],
   },
   {
     title: "Bombas de pozo",
-    description:
-      "Instalación, reparación y mantenimiento de bombas de pozo y sistemas de bombeo para captación de agua.",
+    description: "Instalación, reparación y mantenimiento de bombas de pozo y sistemas de bombeo para captación de agua.",
     icon: "💧",
     slug: "bombas-de-pozo",
-    category: "Instalaciones",
+    category: "Climatización y equipos",
     featured: true,
+    benefits: [
+      "Instalación de bombas de pozo para captación de agua",
+      "Reparación de equipos de bombeo existentes",
+      "Mantenimiento preventivo para alargar la vida útil del equipo",
+      "Asesoramiento sobre el tipo de bomba según las necesidades",
+    ],
+    whenToContact: [
+      "Necesitas instalar un sistema de bombeo para captación de agua",
+      "Tu bomba actual no funciona correctamente o ha dejado de dar presión",
+      "Quieres realizar un mantenimiento preventivo del equipo",
+    ],
+    relatedServices: ["instalaciones-electricas", "mantenimiento-electrico", "automatismos"],
   },
   {
     title: "Reparaciones eléctricas",
-    description:
-      "Diagnóstico y reparación de averías eléctricas. Solucionamos problemas de forma rápida y segura, tanto en hogares como en negocios.",
+    description: "Diagnóstico y reparación de averías eléctricas. Solucionamos problemas de forma rápida y segura, tanto en hogares como en negocios.",
     icon: "🔧",
     slug: "reparaciones-electricas",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
     featured: true,
+    benefits: [
+      "Diagnóstico profesional para identificar el origen de la avería",
+      "Reparación de circuitos, enchufes, interruptores y puntos de luz",
+      "Sustitución de componentes dañados por otros compatibles",
+      "Comprobación de la instalación tras la reparación",
+    ],
+    whenToContact: [
+      "Tienes un enchufe que no funciona o da calambre",
+      "Salta el diferencial o el automático con frecuencia",
+      "Alguna zona de la vivienda se ha quedado sin luz",
+      "Necesitas revisar una instalación antes de una reforma",
+    ],
+    relatedServices: ["mantenimiento-electrico", "cuadros-electricos", "averias-electricas"],
   },
-
-  // ══════════════════════════════════════════
-  // RESTO DE SERVICIOS (no destacados)
-  // ══════════════════════════════════════════
   {
     title: "Cuadros eléctricos",
-    description:
-      "Instalación, renovación y adecuación de cuadros eléctricos según normativa. Cuadros para viviendas, locales e industrias.",
+    description: "Instalación, renovación y adecuación de cuadros eléctricos según normativa. Cuadros para viviendas, locales e industrias.",
     icon: "📊",
     slug: "cuadros-electricos",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
+    benefits: [
+      "Instalación de cuadros eléctricos nuevos adaptados a la normativa",
+      "Renovación de cuadros obsoletos o con dispositivos desactualizados",
+      "Distribución equilibrada de circuitos y protecciones diferenciadas",
+      "Instalación de protecciones diferenciales y magnetotérmicas adecuadas",
+    ],
+    whenToContact: [
+      "Tu cuadro eléctrico es antiguo o tiene dispositivos que ya no cumplen normativa",
+      "Salta el diferencial con frecuencia sin motivo aparente",
+      "Estás reformando y necesitas actualizar el cuadro eléctrico",
+      "Necesitas un cuadro nuevo para una instalación o ampliación",
+    ],
+    relatedServices: ["instalaciones-electricas", "reformas-electricas", "reparaciones-electricas"],
   },
   {
     title: "Boletines eléctricos y certificados",
-    description:
-      "Tramitación de boletines eléctricos (CIE) y certificados de instalación. Documentación necesaria para legalizar instalaciones.",
+    description: "Tramitación de boletines eléctricos (CIE) y certificados de instalación. Documentación necesaria para legalizar instalaciones.",
     icon: "📋",
     slug: "boletines-electricos",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
+    benefits: [
+      "Tramitación del Certificado de Instalación Eléctrica (CIE)",
+      "Legalización de instalaciones nuevas o reformadas",
+      "Asesoramiento sobre la documentación técnica necesaria",
+      "Gestión ante el organismo competente",
+    ],
+    whenToContact: [
+      "Necesitas legalizar una instalación eléctrica nueva",
+      "Has realizado reformas y necesitas actualizar el boletín",
+      "Te requiere el boletín eléctrico para contratar o modificar la potencia",
+      "Necesitas un certificado para una comunidad de vecinos o local",
+    ],
+    relatedServices: ["instalaciones-electricas", "reformas-electricas", "instalaciones-locales"],
   },
   {
     title: "Instalaciones en viviendas",
-    description:
-      "Instalaciones eléctricas completas para viviendas unifamiliares y pisos. Desde obra nueva hasta reformas integrales.",
+    description: "Instalaciones eléctricas completas para viviendas unifamiliares y pisos. Desde obra nueva hasta reformas integrales.",
     icon: "🏠",
     slug: "instalaciones-viviendas",
-    category: "Instalaciones eléctricas",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación completa para viviendas de obra nueva",
+      "Reforma y actualización de instalaciones existentes",
+      "Distribución de puntos de luz, enchufes y tomas adaptada al uso",
+      "Cumplimiento del reglamento electrotécnico para viviendas",
+    ],
+    whenToContact: [
+      "Estás construyendo una vivienda y necesitas la instalación eléctrica",
+      "Vas a reformar tu casa y quieres actualizar toda la instalación",
+      "La instalación actual se queda corta para tus necesidades",
+    ],
+    relatedServices: ["instalaciones-electricas", "reformas-electricas", "iluminacion-led"],
   },
   {
     title: "Instalaciones en locales y negocios",
-    description:
-      "Instalaciones eléctricas para locales comerciales, oficinas y negocios. Proyectos adaptados a la actividad del local.",
+    description: "Instalaciones eléctricas para locales comerciales, oficinas y negocios. Proyectos adaptados a la actividad del local.",
     icon: "🏪",
     slug: "instalaciones-locales",
-    category: "Instalaciones eléctricas",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación adaptada a la actividad comercial y normativa sectorial",
+      "Diseño de la distribución según el mobiliario y uso previsto",
+      "Instalación de cuadros y protecciones para cargas comerciales",
+      "Certificación y legalización de la instalación",
+    ],
+    whenToContact: [
+      "Vas a abrir un nuevo local comercial y necesita instalación eléctrica",
+      "Reformas tu negocio y necesitas redistribuir la instalación",
+      "Necesitas adecuar la instalación a la normativa vigente",
+    ],
+    relatedServices: ["instalaciones-electricas", "cuadros-electricos", "iluminacion-led"],
   },
   {
     title: "Instalaciones en comunidades",
-    description:
-      "Instalaciones y mantenimiento eléctrico para comunidades de vecinos. Zonas comunes, garajes, porteros automáticos y más.",
+    description: "Instalaciones y mantenimiento eléctrico para comunidades de vecinos. Zonas comunes, garajes, porteros automáticos y más.",
     icon: "🏢",
     slug: "instalaciones-comunidades",
-    category: "Instalaciones eléctricas",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalaciones eléctricas para zonas comunes de comunidades",
+      "Mantenimiento de porteros automáticos y videoporteros",
+      "Instalaciones para garajes, trasteros y cuartos de instalaciones",
+      "Adecuación de infraestructuras de telecomunicaciones",
+    ],
+    whenToContact: [
+      "Tu comunidad necesita una revisión de las instalaciones eléctricas de zonas comunes",
+      "Hay que renovar el portero automático o videoportero",
+      "Necesitáis un presupuesto para una reforma o mejora en el edificio",
+    ],
+    relatedServices: ["porteros-automaticos", "telecomunicaciones", "instalaciones-electricas"],
   },
   {
     title: "Climatización",
-    description:
-      "Soluciones de climatización para todo tipo de espacios. Sistemas eficientes adaptados a cada necesidad.",
+    description: "Soluciones de climatización para todo tipo de espacios. Sistemas eficientes adaptados a cada necesidad.",
     icon: "🌡️",
     slug: "climatizacion",
-    category: "Climatización",
+    category: "Climatización y equipos",
+    benefits: [
+      "Instalación de sistemas de climatización por conductos y splits",
+      "Mantenimiento y revisión de equipos existentes",
+      "Asesoramiento sobre la solución más eficiente para cada espacio",
+      "Reparación de averías en sistemas de climatización",
+    ],
+    whenToContact: [
+      "Necesitas un sistema de climatización completo para tu hogar o local",
+      "Tu sistema actual no funciona correctamente o necesita mantenimiento",
+      "Quieres mejorar la eficiencia energética de tu climatización",
+    ],
+    relatedServices: ["aire-acondicionado", "mantenimiento-electrico", "instalaciones-viviendas"],
   },
   {
     title: "Iluminación LED",
-    description:
-      "Instalación de sistemas de iluminación LED para hogares, comercios y espacios exteriores. Ahorro energético y mayor durabilidad.",
+    description: "Instalación de sistemas de iluminación LED para hogares, comercios y espacios exteriores. Ahorro energético y mayor durabilidad.",
     icon: "💡",
     slug: "iluminacion-led",
-    category: "Iluminación y automatismos",
+    category: "Energía y eficiencia",
+    benefits: [
+      "Sustitución de iluminación convencional por LED con ahorro energético",
+      "Instalación de iluminación LED en hogares, locales y exteriores",
+      "Asesoramiento sobre el tipo de luminaria según el espacio y uso",
+      "Instalación de sistemas de control y regulación de iluminación",
+    ],
+    whenToContact: [
+      "Quieres reducir el consumo eléctrico de tu factura de luz",
+      "Necesitas iluminación nueva para una reforma o ampliación",
+      "La iluminación actual de tu negocio es insuficiente o gasta mucho",
+    ],
+    relatedServices: ["instalaciones-electricas", "instalaciones-viviendas", "domotica"],
   },
   {
     title: "Automatismos",
-    description:
-      "Instalación de automatismos para puertas, persianas, toldos y cancelas. Mayor comodidad y control en tu hogar o negocio.",
+    description: "Instalación de automatismos para puertas, persianas, toldos y cancelas. Mayor comodidad y control en tu hogar o negocio.",
     icon: "⚙️",
     slug: "automatismos",
-    category: "Iluminación y automatismos",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación de motores y automatismos para puertas y cancelas",
+      "Motorización de persianas y toldos",
+      "Instalación de sistemas de apertura automática",
+      "Asesoramiento sobre el tipo de automatismo más adecuado",
+    ],
+    whenToContact: [
+      "Quieres motorizar la puerta de tu garaje o cancelas",
+      "Necesitas automatizar persianas o toldos en tu hogar",
+      "Buscas mayor comodidad y control de accesos en tu negocio",
+    ],
+    relatedServices: ["instalaciones-electricas", "domotica", "porteros-automaticos"],
   },
   {
     title: "Porteros automáticos y videoporteros",
-    description:
-      "Instalación de porteros automáticos y videoporteros para viviendas y comunidades. Sistemas actuales con audio y vídeo.",
+    description: "Instalación de porteros automáticos y videoporteros para viviendas y comunidades. Sistemas actuales con audio y vídeo.",
     icon: "📹",
     slug: "porteros-automaticos",
-    category: "Telecomunicaciones y domótica",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación de porteros automáticos de audio para viviendas y comunidades",
+      "Instalación de videoporteros con cámara y pantalla",
+      "Sustitución de sistemas antiguos por modelos actuales",
+      "Instalación de sistemas para comunidades con varias viviendas",
+    ],
+    whenToContact: [
+      "Necesitas un portero automático nuevo en tu vivienda o comunidad",
+      "El sistema actual no funciona o está obsoleto",
+      "Quieres mejorar la seguridad con un videoportero con cámara",
+    ],
+    relatedServices: ["instalaciones-comunidades", "telecomunicaciones", "automatismos"],
   },
   {
     title: "Telecomunicaciones",
-    description:
-      "Instalación de infraestructuras de telecomunicaciones en viviendas y edificios. Antenas, fibra óptica y redes de datos.",
+    description: "Instalación de infraestructuras de telecomunicaciones en viviendas y edificios. Antenas, fibra óptica y redes de datos.",
     icon: "📡",
     slug: "telecomunicaciones",
-    category: "Telecomunicaciones y domótica",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación de infraestructuras de telecomunicaciones en edificios",
+      "Cableado estructurado para redes de datos y fibra óptica",
+      "Instalación de antenas y sistemas de TV",
+      "Adecuación a la normativa de infraestructuras comunes",
+    ],
+    whenToContact: [
+      "Tu comunidad necesita actualizar la infraestructura de telecomunicaciones",
+      "Necesitas cableado de red para un local comercial u oficina",
+      "Vas a reformar y quieres dejar preparada la instalación de telecomunicaciones",
+    ],
+    relatedServices: ["instalaciones-comunidades", "domotica", "porteros-automaticos"],
   },
   {
     title: "Domótica",
-    description:
-      "Instalación de sistemas de domótica para la automatización y control inteligente del hogar: iluminación, climatización, seguridad y más.",
+    description: "Instalación de sistemas de domótica para la automatización y control inteligente del hogar: iluminación, climatización, seguridad y más.",
     icon: "🤖",
     slug: "domotica",
-    category: "Telecomunicaciones y domótica",
+    category: "Instalaciones para inmuebles",
+    benefits: [
+      "Instalación de sistemas de control inteligente para el hogar",
+      "Automatización de iluminación, climatización y persianas",
+      "Integración de sistemas de seguridad y detección",
+      "Configuración de escenas y programación horaria",
+    ],
+    whenToContact: [
+      "Quieres hacer tu hogar más inteligente y automatizado",
+      "Te interesa controlar la iluminación y climatización desde el móvil",
+      "Buscas mejorar la eficiencia energética con automatización",
+    ],
+    relatedServices: ["instalaciones-electricas", "iluminacion-led", "automatismos"],
   },
   {
     title: "Reformas eléctricas",
-    description:
-      "Renovación de instalaciones eléctricas antiguas. Actualizamos tu cuadro, cableado y mecanismos para cumplir la normativa actual.",
+    description: "Renovación de instalaciones eléctricas antiguas. Actualizamos tu cuadro, cableado y mecanismos para cumplir la normativa actual.",
     icon: "🔨",
     slug: "reformas-electricas",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
+    benefits: [
+      "Renovación completa de la instalación eléctrica existente",
+      "Sustitución del cuadro eléctrico y protecciones",
+      "Cambio de cableado y mecanismos (enchufes, interruptores)",
+      "Adaptación a la normativa vigente del REBT",
+    ],
+    whenToContact: [
+      "Tu instalación eléctrica tiene más de 20 años y nunca se ha renovado",
+      "Estás haciendo una reforma integral y quieres dejar la electricidad al día",
+      "Los enchufes son de dos patas o los mecanismos están anticuados",
+      "Necesitas más puntos de luz o enchufes en zonas concretas",
+    ],
+    relatedServices: ["instalaciones-electricas", "cuadros-electricos", "instalaciones-viviendas"],
   },
   {
     title: "Averías eléctricas",
-    description:
-      "Asistencia para averías eléctricas: cortocircuitos, saltos del diferencial, apagones parciales y otras incidencias. Consulta disponibilidad para urgencias.",
+    description: "Asistencia para averías eléctricas: cortocircuitos, saltos del diferencial, apagones parciales y otras incidencias. Consulta disponibilidad para urgencias.",
     icon: "⚠️",
     slug: "averias-electricas",
-    category: "Instalaciones eléctricas",
+    category: "Electricidad",
+    benefits: [
+      "Diagnóstico rápido para identificar el origen de la avería",
+      "Reparación de cortocircuitos y problemas de sobrecarga",
+      "Solución de saltos del diferencial o automáticos",
+      "Comprobación de la instalación para descartar riesgos",
+    ],
+    whenToContact: [
+      "Se ha ido la luz en una zona de la vivienda y no sabes por qué",
+      "Salta el diferencial constantemente al conectar un electrodoméstico",
+      "Huele a quemado en algún punto de la instalación",
+      "Necesitas asistencia para una avería urgente (consulta disponibilidad)",
+    ],
+    relatedServices: ["reparaciones-electricas", "cuadros-electricos", "mantenimiento-electrico"],
   },
 ];
