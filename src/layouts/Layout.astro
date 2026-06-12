@@ -126,11 +126,10 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
       (function () {
         "use strict";
 
-        // 1. Marcar JS como activo (activa los estilos ocultos en CSS)
         document.documentElement.classList.add("js");
 
         var selector =
-          ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale";
+          ".reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade, .reveal-scale-sm, .reveal-left-sm, .reveal-right-sm";
 
         function revealAll() {
           document.querySelectorAll(selector).forEach(function (el) {
@@ -138,8 +137,6 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
           });
         }
 
-        // 2. Si no hay IntersectionObserver o el usuario prefiere
-        //    reducir movimiento, revelar todo inmediatamente
         if (
           !("IntersectionObserver" in window) ||
           window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -148,12 +145,9 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
           return;
         }
 
-        // 3. Contar elementos
         var elements = document.querySelectorAll(selector);
-
         if (elements.length === 0) return;
 
-        // 4. Crear observer
         var observer = new IntersectionObserver(
           function (entries) {
             entries.forEach(function (entry) {
@@ -163,16 +157,13 @@ const ogImageUrl = `${LOCAL_DATA.siteUrl}${finalOgImage}`;
               }
             });
           },
-          { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+          { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
         );
 
-        // 5. Empezar a observar
         elements.forEach(function (el) {
           observer.observe(el);
         });
 
-        // 6. Safety timeout: revelar elementos que no se hayan visto
-        //    después de 3 segundos
         setTimeout(revealAll, 3000);
       })();
     </script>

@@ -11,18 +11,21 @@ import Button from "./Button.astro";
     <div class="h-full w-full" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
   </div>
 
-  <!-- Glows decorativos -->
-  <div class="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-brand-accent/10 blur-[100px]" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-brand-light/10 blur-[100px]" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/[0.04] blur-[80px]" aria-hidden="true"></div>
+  <!-- Glows decorativos — blur reducido para menor coste GPU -->
+  <div class="pointer-events-none absolute -right-40 -top-40 h-72 w-72 rounded-full bg-brand-accent/10 blur-[60px]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-40 -left-40 h-72 w-72 rounded-full bg-brand-light/10 blur-[60px]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/[0.04] blur-[50px]" aria-hidden="true"></div>
+
+  <!-- Línea decorativa estática -->
+  <div class="pointer-events-none absolute left-1/2 top-0 h-px w-1/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-brand-accent/20 to-transparent" aria-hidden="true"></div>
 
   <div class="relative z-10 mx-auto max-w-4xl px-4 text-center">
-    <!-- Badge -->
+    <!-- Badge con entrada escalonada -->
     <span class="mb-6 inline-block motion-safe:animate-fade-in badge-hover rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-1 text-sm font-medium text-brand-accent-light [animation-delay:100ms] [animation-fill-mode:both]">
       {HERO.badge}
     </span>
 
-    <!-- Título -->
+    <!-- Título con gradiente y subrayado estático -->
     <h1 class="mb-6 motion-safe:animate-fade-up text-4xl font-bold leading-tight tracking-tight text-gradient md:text-5xl lg:text-6xl [animation-delay:300ms] [animation-fill-mode:both]">
       {COMPANY.shortName}
     </h1>
@@ -31,6 +34,22 @@ import Button from "./Button.astro";
     <p class="mb-10 motion-safe:animate-fade-up text-lg text-white/80 md:text-xl [animation-delay:500ms] [animation-fill-mode:both]">
       {HERO.subtitle}
     </p>
+
+    <!-- Indicador de confianza estático (solo desktop) -->
+    <div class="mb-10 hidden motion-safe:animate-fade-up items-center justify-center gap-6 text-xs text-white/40 sm:flex [animation-delay:600ms] [animation-fill-mode:both]">
+      <span class="flex items-center gap-1.5">
+        <svg class="h-3.5 w-3.5 text-brand-accent/60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Profesionales certificados
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="h-3.5 w-3.5 text-brand-accent/60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Presupuesto sin compromiso
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="h-3.5 w-3.5 text-brand-accent/60" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Atención personalizada
+      </span>
+    </div>
 
     <!-- Botones con iconos SVG incluidos -->
     <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">

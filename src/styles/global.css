@@ -60,17 +60,12 @@
        automáticamente si el usuario lo prefiere.
      ═══════════════════════════════════════ */
 
-  /* Entrada: opacidad */
   --animate-fade-in: fade-in 0.4s ease-out both;
-
-  /* Entrada: opacidad + desplazamiento suave hacia arriba */
   --animate-fade-up: fade-up 0.4s ease-out both;
-
-  /* Entrada: opacidad + escala sutil */
   --animate-scale-in: scale-in 0.35s ease-out both;
-
-  /* Desplazamiento lateral (para el menú móvil) */
   --animate-slide-down: slide-down 0.2s ease-out both;
+  --animate-fade-scale: fade-scale 0.5s ease-out both;
+  --animate-slide-up-sm: slide-up-sm 0.3s ease-out both;
 }
 
 /* ═══════════════════════════════════════════
@@ -94,6 +89,16 @@
 @keyframes scale-in {
   from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-scale {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up-sm {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ═══════════════════════════════════════════════
@@ -159,19 +164,75 @@ html.js .stagger-item {
   transition-delay: calc(var(--stagger-delay, 80ms) * var(--stagger-index, 0));
 }
 
-/* ── 5. MÓVIL: menos distancia, más rápido ── */
+/* ── 5. NUEVAS CLASES REVEAL ADICIONALES ── */
+html.js .reveal-fade {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  will-change: opacity;
+}
+
+html.js .reveal-fade.is-visible {
+  opacity: 1;
+}
+
+html.js .reveal-scale-sm {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+html.js .reveal-scale-sm.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+html.js .reveal-left-sm {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+html.js .reveal-left-sm.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+html.js .reveal-right-sm {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+
+html.js .reveal-right-sm.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── 6. MÓVIL: menos distancia, más rápido ── */
 @media (max-width: 767px) {
   html.js .reveal,
   html.js .reveal-up,
   html.js .reveal-left,
   html.js .reveal-right,
-  html.js .reveal-scale {
-    transition-duration: 0.5s;
+  html.js .reveal-scale,
+  html.js .reveal-fade,
+  html.js .reveal-scale-sm,
+  html.js .reveal-left-sm,
+  html.js .reveal-right-sm {
+    transition-duration: 0.45s;
   }
-  html.js .reveal-up    { transform: translateY(16px); }
-  html.js .reveal-left  { transform: translateX(-14px); }
-  html.js .reveal-right { transform: translateX(14px); }
+  html.js .reveal-up    { transform: translateY(14px); }
+  html.js .reveal-left  { transform: translateX(-12px); }
+  html.js .reveal-right { transform: translateX(12px); }
   html.js .reveal-scale { transform: scale(0.97); }
+  html.js .reveal-scale-sm { transform: scale(0.985); }
+  html.js .reveal-left-sm  { transform: translateX(-8px); }
+  html.js .reveal-right-sm { transform: translateX(8px); }
+
+  .section-accent { width: 2rem; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -259,6 +320,7 @@ html.js .stagger-item {
 /* Card glow on hover (gradient border + soft shadow) */
 .card-glow {
   position: relative;
+  contain: layout style;
   transition: box-shadow 0.3s ease-out,
               transform 0.3s ease-out;
 }
@@ -318,6 +380,110 @@ html.js .stagger-item {
 }
 
 /* ═══════════════════════════════════════════════
+   PREMIUM UTILITY CLASSES — PARTE II
+   ═══════════════════════════════════════════════ */
+
+/* Text highlight: resalta palabras clave dentro de párrafos */
+.text-highlight {
+  color: var(--color-brand-accent-dark);
+  font-weight: 600;
+}
+
+/* Heading underline decorativo */
+.heading-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-brand-accent), var(--color-brand-accent-light));
+}
+
+/* Subtle link underline animation (for footer, text links) */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Step number: circle with scale on hover */
+.step-circle {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.step-circle:hover {
+  transform: scale(1.08);
+}
+
+/* Arrow animation for "Ver más" links */
+.arrow-right {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .arrow-right {
+  transform: translateX(4px);
+}
+
+/* Checkmark icon subtle pulse */
+.check-icon {
+  transition: transform 0.3s ease;
+}
+
+.group:hover .check-icon {
+  transform: scale(1.15);
+}
+
+/* Badge entry: subtle scale */
+.badge-entry {
+  transition: transform 0.25s ease;
+}
+
+.badge-entry:hover {
+  transform: scale(1.03);
+}
+
+/* Social icon hover */
+.social-icon {
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+}
+
+/* Section accent bar animation */
+.section-accent {
+  transition: width 0.4s ease;
+}
+
+.reveal-up.is-visible .section-accent,
+.reveal.is-visible .section-accent,
+.reveal-fade.is-visible .section-accent {
+  width: 3rem;
+}
+
+/* ═══════════════════════════════════════════════
    BREADCRUMBS
    ═══════════════════════════════════════════════ */
 
@@ -373,16 +539,28 @@ html.js .stagger-item {
   .reveal-left,
   .reveal-right,
   .reveal-scale,
+  .reveal-fade,
+  .reveal-scale-sm,
+  .reveal-left-sm,
+  .reveal-right-sm,
   html.js .reveal,
   html.js .reveal-up,
   html.js .reveal-left,
   html.js .reveal-right,
   html.js .reveal-scale,
+  html.js .reveal-fade,
+  html.js .reveal-scale-sm,
+  html.js .reveal-left-sm,
+  html.js .reveal-right-sm,
   html.js .reveal.is-visible,
   html.js .reveal-up.is-visible,
   html.js .reveal-left.is-visible,
   html.js .reveal-right.is-visible,
-  html.js .reveal-scale.is-visible {
+  html.js .reveal-scale.is-visible,
+  html.js .reveal-fade.is-visible,
+  html.js .reveal-scale-sm.is-visible,
+  html.js .reveal-left-sm.is-visible,
+  html.js .reveal-right-sm.is-visible {
     opacity: 1;
     transform: none;
     transition: none;
@@ -395,7 +573,13 @@ html.js .stagger-item {
   .badge-hover,
   .chip-hover,
   .card-glow,
-  .button-shine::after {
+  .button-shine::after,
+  .arrow-right,
+  .check-icon,
+  .badge-entry,
+  .social-icon,
+  .step-circle,
+  .link-underline::after {
     transition: none !important;
     transform: none !important;
     will-change: auto !important;
@@ -423,11 +607,6 @@ section {
   contain: layout style;
 }
 
-/* Las tarjetas también aíslan su pintado */
-.card-hover {
-  contain: layout style;
-}
-
 body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, sans-serif;
@@ -437,10 +616,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Outline de accesibilidad para elementos interactivos no-formulario */
+/* Outline de accesibilidad global para todos los interactivos */
 a:focus-visible,
 button:focus-visible,
-summary:focus-visible {
+summary:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
   outline: 2px solid var(--color-brand-accent);
   outline-offset: 2px;
   border-radius: 0.5rem;

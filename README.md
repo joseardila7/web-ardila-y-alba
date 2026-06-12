@@ -781,6 +781,25 @@ Si esta web se entrega como proyecto profesional:
 
 ---
 
+## Medición básica de rendimiento
+
+Para comprobar que las animaciones van fluidas y no hay tirones:
+
+1. **Abre Chrome DevTools** (`F12` o clic derecho → Inspeccionar)
+2. Ve a la pestaña **Performance**
+3. Haz clic en el botón **Record** (círculo)
+4. **Scrollea lentamente** por las páginas de Inicio y Servicios (cubre todo el contenido)
+5. Haz clic en **Stop**
+6. Revisa la línea de **FPS** (mira que se mantenga en verde, cerca de 60 fps)
+7. Busca picos rojos en la línea de **Frames** — indican tirones
+8. **En móvil**: Activa la vista responsive (icono de dispositivo) y repite la grabación
+9. **Verifica animaciones infinitas**: En la pestaña **Elements**, busca elementos con `animation-iteration-count: infinite` o `animation: spin` — solo debe haber el spinner del formulario de envío
+10. **Verifica composición**: En DevTools, activa **Rendering** → **Layer borders** — las animaciones deben aparecer como rectángulos naranjas (capas compuestas por GPU)
+
+> No hace falta instalar herramientas adicionales. Si notas tirones, revisa que no haya demasiados elementos `.reveal*` animándose a la vez, o reduce el stagger.
+
+---
+
 ## Cómo probar los enlaces de contacto
 
 1. **Teléfono:** Al hacer clic en "Llama ahora" se abre el marcador del teléfono con el 656 183 884

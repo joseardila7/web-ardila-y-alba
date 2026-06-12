@@ -20,8 +20,8 @@ import { VALUES } from "../data/company";
       <div class="absolute inset-x-0 top-0 h-0.5 bg-brand-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100"></div>
 
       {/* Icono en círculo */}
-      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-accent/10 text-3xl transition-colors duration-200 group-hover:bg-brand-accent/15">
-        <span aria-hidden="true">{value.icon}</span>
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-accent/10 text-3xl transition-[transform,background-color] duration-200 group-hover:scale-105 group-hover:bg-brand-accent/15">
+        <span aria-hidden="true" class="transition-transform duration-200 group-hover:-translate-y-0.5">{value.icon}</span>
       </div>
 
       {/* Título */}

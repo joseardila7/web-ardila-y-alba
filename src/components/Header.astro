@@ -5,7 +5,7 @@ import { COMPANY } from "../data/company";
 const currentPath = Astro.url.pathname;
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-white/10 bg-brand-dark transition-shadow duration-200">
+<header id="site-header" class="sticky top-0 z-50 border-b border-white/10 bg-brand-dark transition-shadow duration-200 will-change-shadow">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
     <!-- LOGO -->
     <a href="/" class="flex items-center gap-3 no-underline" aria-label="Ir a inicio">
@@ -60,7 +60,7 @@ const currentPath = Astro.url.pathname;
               >
                 <span class="relative">
                   {link.label}
-                  <span class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-brand-accent transition-all duration-300 motion-safe:group-hover:w-full" aria-hidden="true"></span>
+                  <span class="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-brand-accent transition-[width] duration-300 motion-safe:group-hover:w-full" aria-hidden="true"></span>
                 </span>
               </a>
             </li>
@@ -80,7 +80,7 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <style>
-  /* Mobile menu animation */
+  /* Mobile menu animation — optimizada: solo opacity + transform */
   @media (max-width: 767px) {
     #nav-menu {
       position: absolute;
@@ -93,8 +93,8 @@ const currentPath = Astro.url.pathname;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 1rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-      transform: translateY(-8px);
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+      transform: translateY(-6px);
     }
 
     #nav-menu.mobile-open {

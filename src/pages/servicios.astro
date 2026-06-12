@@ -43,7 +43,7 @@ function servicesByCategory(category: string) {
     if (categoryServices.length === 0) return null;
 
     return (
-      <section class={`reveal-up px-4 py-20 md:py-28 ${catIndex % 2 === 1 ? "bg-brand-surface-alt" : ""}`} aria-labelledby={`cat-${category}`}>
+      <section class={`reveal-up px-4 py-20 md:py-28 ${catIndex % 2 === 1 ? "bg-brand-surface-alt" : ""}`} aria-label={category}>
         <div class="mx-auto max-w-7xl">
           <SectionTitle
             title={category}
@@ -52,7 +52,7 @@ function servicesByCategory(category: string) {
 
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categoryServices.map((service, i) => (
-              <div class="reveal-up card-hover" style={`transition-delay: ${i * 100}ms`}>
+              <div class="reveal-up card-hover card-glow rounded-xl" style={`transition-delay: ${i * 80}ms`}>
                 <ServiceCard service={service} href={`/servicios/${service.slug}`} />
               </div>
             ))}

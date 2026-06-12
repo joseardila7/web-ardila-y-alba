@@ -51,10 +51,10 @@ const canonicalUrl = `${LOCAL_DATA.siteUrl}/servicios/${service.slug}`;
         <div class="grid gap-4 sm:grid-cols-2">
           {service.benefits.map((benefit, i) => (
             <div
-              class="reveal-up flex items-start gap-4 rounded-xl bg-white p-5 shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              class="reveal-up group flex items-start gap-4 rounded-xl bg-white p-5 shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-md"
               style={`transition-delay: ${i * 80}ms`}
             >
-              <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-accent/10 text-sm font-bold text-brand-accent" aria-hidden="true">
+              <span class="check-icon mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-accent/10 text-sm font-bold text-brand-accent" aria-hidden="true">
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
               </span>
               <p class="text-gray-700">{benefit}</p>
